@@ -1,0 +1,371 @@
+[
+  {
+    "branch_loan": "KARAWANG",
+    "status": "SILVER",
+    "pre_approval": "Non_Pre_Appr",
+    "agreement_number": "9019005960",
+    "customer_name": "UDIN PUTRA SYAFRUDDIN",
+    "contract": "LIV",
+    "customer_address": "JALAN RAYA GALUH MAS PERUMAHAN GALUH MAS CLUSTER COURTYARD BLOK VII A NOMOR C-11                    ",
+    "address_districts": "Cikampek",
+    "address_sub_districts": "Dawuan Barat",
+    "address_city": "Karawang",
+    "brand_type": "MINIBUS / TOYOTA-NEW INNOVA-BENSIN G 2.0 MT",
+    "result_detils": [
+      {
+        "id": 12,
+        "annual_fee": 10.9072718,
+        "disbursement": 77914318.81,
+        "tenure": 9705000
+      },
+      {
+        "id": 24,
+        "annual_fee": 11.82124525,
+        "disbursement": 82209318.81,
+        "tenure": 5410000
+      },
+      {
+        "id": 36,
+        "annual_fee": 12.41229681,
+        "disbursement": 83616318.81,
+        "tenure": 4003000
+      },
+      {
+        "id": 48,
+        "annual_fee": 12.9170273,
+        "disbursement": 84301318.81,
+        "tenure": 3318000
+      }
+    ],
+    "priority": "Very High",
+    "maximum_principal_debt": "105000000",
+    "effective_rate": "23.290403",
+    "phone_number": "9019105060",
+    "manufacturing_year": "2018",
+    "status-assign": "assigned"
+  },
+  {
+    "branch_loan": "KARAWANG",
+    "status": "PRIORITAS",
+    "pre_approval": "Non_Pre_Appr",
+    "agreement_number": "9019031774",
+    "customer_name": "ENUNG",
+    "contract": "LIV",
+    "customer_address": "JALAN RAYA GALUH MAS PERUMAHAN GALUH MAS CLUSTER COURTYARD BLOK VII A NOMOR C-11                    ",
+    "address_districts": "Jatisari",
+    "address_sub_districts": "Cikalongsari",
+    "address_city": "Karawang",
+    "brand_type": "JEEP / DAIHATSU-TERIOS-TX 1.5 MT",
+    "result_detils": [
+      {
+        "id": 12,
+        "annual_fee": 10.04122764,
+        "disbursement": 49739390.26,
+        "tenure": 8529000
+      },
+      {
+        "id": 24,
+        "annual_fee": 10.85433236,
+        "disbursement": 53551390.26,
+        "tenure": 4717000
+      },
+      {
+        "id": 36,
+        "annual_fee": 11.37020738,
+        "disbursement": 54803390.26,
+        "tenure": 3465000
+      },
+      {
+        "id": 48,
+        "annual_fee": 11.80769218,
+        "disbursement": 55415390.26,
+        "tenure": 2853000
+      }
+    ],
+    "priority": "High",
+    "maximum_principal_debt": "93000000",
+    "effective_rate": "21.475481",
+    "phone_number": "8",
+    "manufacturing_year": "2018",
+    "status-assign": ""
+  },
+  {
+    "branch_loan": "BELILAS",
+    "status": "PRIORITAS",
+    "pre_approval": "Pre_Approval",
+    "agreement_number": "9019006761",
+    "customer_name": "PUJI LESTARI",
+    "contract": "LIV",
+    "customer_address": "JALAN RAYA BELILAS                                                                                  ",
+    "address_districts": "Seberida",
+    "address_sub_districts": "Pangkalan Kasai",
+    "address_city": "Indragiri Hulu",
+    "brand_type": "MINIBUS / TOYOTA-ALL NEW AVANZA-VVTI G 1.3 MT",
+    "disbursement_12": "89814364.56",
+    "disbursement_24": 94518364.56,
+    "disbursement_36": 96059364.56,
+    "disbursement_48": 96809364.56,
+    "result_detils": [
+      {
+        "id": 12,
+        "annual_fee": 10.90647658,
+        "disbursement": 49739390.26,
+        "tenure": 10629000
+      },
+      {
+        "id": 24,
+        "annual_fee": 11.82035536,
+        "disbursement": 94518364.56,
+        "tenure": 5925000
+      },
+      {
+        "id": 36,
+        "annual_fee": 12.41133592,
+        "disbursement": 96059364.56,
+        "tenure": 4384000
+      },
+      {
+        "id": 48,
+        "annual_fee": 12.91600287,
+        "disbursement": 96809364.56,
+        "tenure": 3634000
+      }
+    ],
+    "priority": "Medium",
+    "maximum_principal_debt": "115000000",
+    "effective_rate": "23.288739",
+    "phone_number": "82236229847",
+    "manufacturing_year": "2018",
+    "status-assign": ""
+  },
+  {
+    "branch_loan": "KARAWANG",
+    "status": "PRIORITAS",
+    "pre_approval": "Pre_Approval",
+    "agreement_number": "9019001600",
+    "customer_name": "ADE FIRMAN",
+    "contract": "EXP",
+    "customer_address": "JALAN RAYA GALUH MAS PERUMAHAN GALUH MAS CLUSTER COURTYARD BLOK VII A NOMOR C-11                    ",
+    "address_districts": "Jatisari",
+    "address_sub_districts": "Jatisari",
+    "address_city": "Karawang",
+    "brand_type": "MINIBUS / DAIHATSU-ALL NEW XENIA-R VVTI 1.3 MT",
+    "result_detils": [
+      {
+        "id": 12,
+        "annual_fee": 10.47128487,
+        "disbursement": 76181470,
+        "tenure": 8286000
+      },
+      {
+        "id": 24,
+        "annual_fee": 11.33391878,
+        "disbursement": 79866470,
+        "tenure": 4601000
+      },
+      {
+        "id": 36,
+        "annual_fee": 11.88658418,
+        "disbursement": 81075470,
+        "tenure": 3392000
+      },
+      {
+        "id": 48,
+        "annual_fee": 12.35696842,
+        "disbursement": 81665470,
+        "tenure": 2802000
+      }
+    ],
+    "priority": "Low",
+    "maximum_principal_debt": "90000000",
+    "effective_rate": "22.377412",
+    "phone_number": "8",
+    "manufacturing_year": "2018",
+    "status-assign": ""
+  },
+  {
+    "branch_loan": "BELILAS",
+    "status": "PRIORITAS",
+    "pre_approval": "Pre_Approval",
+    "agreement_number": "9019096448",
+    "customer_name": "DEDI SUSANTO",
+    "contract": "LIV",
+    "customer_address": "JALAN RAYA BELILAS                                                                                  ",
+    "address_districts": "Seberida",
+    "address_sub_districts": "Buluh Rampai",
+    "address_city": "Indragiri Hulu",
+    "brand_type": "LIGHT TRUCK / HINO-DUTRO-130 HD DUMP TRUCK",
+    "result_detils": [
+      {
+        "id": 12,
+        "annual_fee": 11.15514766,
+        "disbursement": 30198793.99,
+        "tenure": 7781000
+      },
+      {
+        "id": 24,
+        "annual_fee": 12.09881107,
+        "disbursement": 33632793.99,
+        "tenure": 4347000
+      },
+      {
+        "id": 36,
+        "annual_fee": 12.71216851,
+        "disbursement": 34755793.99,
+        "tenure": 3224000
+      },
+      {
+        "id": 48,
+        "annual_fee": 13.23686252,
+        "disbursement": 35302793.99,
+        "tenure": 2677000
+      }
+    ],
+    "priority": "Uncategorize",
+    "maximum_principal_debt": "84000000",
+    "effective_rate": "23.808862",
+    "phone_number": "82236229847",
+    "manufacturing_year": "2018",
+    "status_assign": ""
+  },
+
+  {
+    "branch_loan": "KARAWANG",
+    "status": "SILVER",
+    "pre_approval": "Non_Pre_Appr",
+    "agreement_number": "9019905060",
+    "customer_name": "UDIN PUTRA SYAFRUDDIN",
+    "contract": "LIV",
+    "customer_address": "JALAN RAYA GALUH MAS PERUMAHAN GALUH MAS CLUSTER COURTYARD BLOK VII A NOMOR C-11                    ",
+    "address_districts": "Cikampek",
+    "address_sub_districts": "Dawuan Barat",
+    "address_city": "Karawang",
+    "brand_type": "MINIBUS / TOYOTA-NEW INNOVA-BENSIN G 2.0 MT",
+    "result_detils": [
+      {
+        "id": 12,
+        "annual_fee": 10.9072718,
+        "disbursement": 77914318.81,
+        "tenure": 9705000
+      },
+      {
+        "id": 24,
+        "annual_fee": 11.82124525,
+        "disbursement": 82209318.81,
+        "tenure": 5410000
+      },
+      {
+        "id": 36,
+        "annual_fee": 12.41229681,
+        "disbursement": 83616318.81,
+        "tenure": 4003000
+      },
+      {
+        "id": 48,
+        "annual_fee": 12.9170273,
+        "disbursement": 84301318.81,
+        "tenure": 3318000
+      }
+    ],
+    "priority": "Very High",
+    "maximum_principal_debt": "105000000",
+    "effective_rate": "23.290403",
+    "phone_number": "9019005060",
+    "manufacturing_year": "2018",
+    "status-assign": "assigned"
+  },
+  {
+    "branch_loan": "KARAWANG",
+    "status": "PRIORITAS",
+    "pre_approval": "Non_Pre_Appr",
+    "agreement_number": "9919031774",
+    "customer_name": "ENUNG",
+    "contract": "LIV",
+    "customer_address": "JALAN RAYA GALUH MAS PERUMAHAN GALUH MAS CLUSTER COURTYARD BLOK VII A NOMOR C-11                    ",
+    "address_districts": "Jatisari",
+    "address_sub_districts": "Cikalongsari",
+    "address_city": "Karawang",
+    "brand_type": "JEEP / DAIHATSU-TERIOS-TX 1.5 MT",
+    "result_detils": [
+      {
+        "id": 12,
+        "annual_fee": 10.04122764,
+        "disbursement": 49739390.26,
+        "tenure": 8529000
+      },
+      {
+        "id": 24,
+        "annual_fee": 10.85433236,
+        "disbursement": 53551390.26,
+        "tenure": 4717000
+      },
+      {
+        "id": 36,
+        "annual_fee": 11.37020738,
+        "disbursement": 54803390.26,
+        "tenure": 3465000
+      },
+      {
+        "id": 48,
+        "annual_fee": 11.80769218,
+        "disbursement": 55415390.26,
+        "tenure": 2853000
+      }
+    ],
+    "priority": "High",
+    "maximum_principal_debt": "93000000",
+    "effective_rate": "21.475481",
+    "phone_number": "8",
+    "manufacturing_year": "2018",
+    "status-assign": ""
+  },
+  {
+    "branch_loan": "BELILAS",
+    "status": "PRIORITAS",
+    "pre_approval": "Pre_Approval",
+    "agreement_number": "9019016761",
+    "customer_name": "PUJI LESTARI",
+    "contract": "LIV",
+    "customer_address": "JALAN RAYA BELILAS                                                                                  ",
+    "address_districts": "Seberida",
+    "address_sub_districts": "Pangkalan Kasai",
+    "address_city": "Indragiri Hulu",
+    "brand_type": "MINIBUS / TOYOTA-ALL NEW AVANZA-VVTI G 1.3 MT",
+    "disbursement_12": "89814364.56",
+    "disbursement_24": 94518364.56,
+    "disbursement_36": 96059364.56,
+    "disbursement_48": 96809364.56,
+    "result_detils": [
+      {
+        "id": 12,
+        "annual_fee": 10.90647658,
+        "disbursement": 49739390.26,
+        "tenure": 10629000
+      },
+      {
+        "id": 24,
+        "annual_fee": 11.82035536,
+        "disbursement": 94518364.56,
+        "tenure": 5925000
+      },
+      {
+        "id": 36,
+        "annual_fee": 12.41133592,
+        "disbursement": 96059364.56,
+        "tenure": 4384000
+      },
+      {
+        "id": 48,
+        "annual_fee": 12.91600287,
+        "disbursement": 96809364.56,
+        "tenure": 3634000
+      }
+    ],
+    "priority": "Medium",
+    "maximum_principal_debt": "115000000",
+    "effective_rate": "23.288739",
+    "phone_number": "82236229847",
+    "manufacturing_year": "2018",
+    "status-assign": ""
+  }
+]

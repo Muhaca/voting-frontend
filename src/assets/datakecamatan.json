@@ -1,0 +1,51 @@
+[{ 
+    "id": 1,
+    "kecamatan": "Cempaka Putih",
+    "kelurahan": "Cempaka Putih Barat"
+},
+{ 
+    "id": 3,
+    "kecamatan": "Gambir",
+    "kelurahan": "Duri Pulo"
+},
+{ 
+    "id": 5,
+    "kecamatan": "Kemayoran",
+    "kelurahan": "Harapan Mulya"
+},
+{ 
+    "id": 7,
+    "kecamatan": "Menteng",
+    "kelurahan": "Cikini"
+},
+
+{ 
+    "id": 9,
+    "kecamatan": "Tanah Abang",
+    "kelurahan": "Bendungan Hilir"
+},
+{ 
+    "id": 11,
+    "kecamatan": "Kelapa Gading",
+    "kelurahan": "Kelapa Gading Barat"
+},
+{ 
+    "id": 13,
+    "kecamatan": "Cipayung",
+    "kelurahan": "Ceger"
+},
+{ 
+    "id": 15,
+    "kecamatan": "Jati Negara",
+    "kelurahan": "Bidara Cina"
+},
+{ 
+    "id": 17,
+    "kecamatan": "Kramat Jati",
+    "kelurahan": "Batu Ampar"
+},
+{ 
+    "id": 19,
+    "kecamatan": "Matraman",
+    "kelurahan": "Kebon Manggis"
+}]

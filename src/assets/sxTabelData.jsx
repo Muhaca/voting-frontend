@@ -91,8 +91,8 @@ export const sxTabelData = {
         cursor: "pointer"
     },
     dialogCredit: {
-        minHeight: "90%",
-        width: "60vh",
+        minHeight: "98%",
+        width: "80vh",
     },
     dialogAction: {
         justifyContent: "space-between",

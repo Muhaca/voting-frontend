@@ -1,51 +1,74 @@
-[{ 
+[
+  {
     "id": 1,
-    "kecamatan": "Cempaka Putih",
-    "kelurahan": "Cempaka Putih Barat"
-},
-{ 
-    "id": 3,
-    "kecamatan": "Gambir",
-    "kelurahan": "Duri Pulo"
-},
-{ 
-    "id": 5,
-    "kecamatan": "Kemayoran",
-    "kelurahan": "Harapan Mulya"
-},
-{ 
-    "id": 7,
-    "kecamatan": "Menteng",
-    "kelurahan": "Cikini"
-},
-
-{ 
-    "id": 9,
-    "kecamatan": "Tanah Abang",
-    "kelurahan": "Bendungan Hilir"
-},
-{ 
-    "id": 11,
-    "kecamatan": "Kelapa Gading",
-    "kelurahan": "Kelapa Gading Barat"
-},
-{ 
-    "id": 13,
-    "kecamatan": "Cipayung",
-    "kelurahan": "Ceger"
-},
-{ 
-    "id": 15,
-    "kecamatan": "Jati Negara",
-    "kelurahan": "Bidara Cina"
-},
-{ 
-    "id": 17,
-    "kecamatan": "Kramat Jati",
-    "kelurahan": "Batu Ampar"
-},
-{ 
-    "id": 19,
-    "kecamatan": "Matraman",
-    "kelurahan": "Kebon Manggis"
-}]
+    "kecamatan": "BABELAN",
+    "kelurahan": [
+      {
+        "id": 1,
+        "kelurahan": "PANTAI HURIP"
+      },
+      {
+        "id": 2,
+        "kelurahan": "MUARA BAKTI"
+      },
+      {
+        "id": 3,
+        "kelurahan": "BUNI BAKTI"
+      },
+      {
+        "id": 4,
+        "kelurahan": "KEDUNG PENGAWAS"
+      },
+      {
+        "id": 5,
+        "kelurahan": "KEDUNG JAYA"
+      },
+      {
+        "id": 6,
+        "kelurahan": "BABELAN KOTA"
+      },
+      {
+        "id": 7,
+        "kelurahan": "KEBALEN"
+      },
+      {
+        "id": 8,
+        "kelurahan": "HURIP JAYA"
+      },
+      {
+        "id": 9,
+        "kelurahan": "BAHAGIA"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "kecamatan": "BOJONGMANGU",
+    "kelurahan": [
+      {
+        "id": 1,
+        "kelurahan": "BOJONG MANGU"
+      },
+      {
+        "id": 2,
+        "kelurahan": "KARANG INDAH"
+      },
+      {
+        "id": 3,
+        "kelurahan": "KARANG MULYA"
+      },
+      {
+        "id": 4,
+        "kelurahan": "MEDAL KRISNA"
+      },
+      {
+        "id": 5,
+        "kelurahan": "SIKABUNGAH"
+      },
+      {
+        "id": 6,
+        "kelurahan": "SUKAMUKTI"
+      }
+    ]
+  }
+]

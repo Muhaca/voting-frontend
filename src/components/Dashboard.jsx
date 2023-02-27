@@ -43,23 +43,24 @@ function Dashboard() {
 
     useEffect(() => {
         getDataVoting();
-        getData()
-        getDataKel()
+        // getData()
+        // getDataKel()
 
     }, []);
 
     const getDataVoting = async () => {
-        const res = await axios.get('http://192.168.122.253:1234/getemployee');
+        const res = await axios.get('http://127.0.0.1:1234/getemployee');
         setVoting(res.data.Data);
     }
 
     const getData = async () => {
-        const res = await axios.get('http://192.168.122.253:1234/gettotaldata');
+        const res = await axios.get('http://127.0.0.1:1234/gettotaldata');
+        console.log(res.data);
         seTotalData(res.data);
     }
 
     const getDataKel= async () => {
-        const res = await axios.get('http://192.168.122.253:1234/gettotaldatakel');
+        const res = await axios.get('http://127.0.0.1:1234/gettotaldatakel');
         setDataKel(res.data);
     }
 
@@ -68,15 +69,7 @@ function Dashboard() {
     //     const res = await axios({
     //         method: 'get',
     //         url: `http://192.168.184.253:1234/gettotaldatakecamatan`,
-    //         withCredentials: false,
-    //         params: {
-    //             kecamatan: kec
-    //         },
-    //     });
-    //     setDataKec(res.data);
-    // }
-
-    // const getDataVotingKel = async (kel) => {
+    //         withCredentials: false,9) => {
     //     const res = await axios({
     //         method: 'get',
     //         url: `http://192.168.184.253:1234/gettotaldatakelurahan`,
@@ -123,13 +116,13 @@ function Dashboard() {
                         options={optionsPie}
                     />
                 </Paper>
-                <Paper elevation={3} sx={{ padding: 3 }}>
+                {/* <Paper elevation={3} sx={{ padding: 3 }}>
                     <Grid container sx={sx.headerComponent}>
                         <Grid item sx={sx.gridItemHeader}>
                             <Typography sx={sx.titleChart}>Per Kecamatan</Typography>
                         </Grid>
                         <Grid item sx={sx.gridItemHeader}>
-                            {/* <Select
+                            <Select
                                 label="Pilih Kecamatan"
                                 value={filterKec}
                                 onChange={(e) => { setFilterKec(e.target.value); getDataVotingKec(e.target.value) }}
@@ -138,7 +131,7 @@ function Dashboard() {
                                 {MockData.map((value, index) => (
                                     <MenuItem key={index} value={value.kecamatan}>{value.kecamatan}</MenuItem>
                                 ))}
-                            </Select> */}
+                            </Select>
                         </Grid>
                     </Grid>
                     <ChartKecamatan apiResponse={totalData} />
@@ -149,7 +142,7 @@ function Dashboard() {
                             <Typography sx={sx.titleChart}>Per Kelurahan</Typography>
                         </Grid>
                         <Grid item sx={sx.gridItemHeader}>
-                            {/* <Select
+                            <Select
                                 label="Pilih Kelurahan"
                                 value={filterKel}
                                 onChange={(e) => { setFilterKel(e.target.value); getDataVotingKel(e.target.value) }}
@@ -158,11 +151,11 @@ function Dashboard() {
                                 {MockData.map((value, index) => (
                                     <MenuItem key={index} value={value.kelurahan}>{value.kelurahan}</MenuItem>
                                 ))}
-                            </Select> */}
+                            </Select>
                         </Grid>
                     </Grid>
                     <ChartKelurahan apiResponse={dataKel}/>
-                </Paper>
+                </Paper> */}
             </div>
         </MainLayout>
     );

@@ -129,7 +129,7 @@ function TabelData() {
         formData3.append('nama', "luna")
         formData3.append('jumlah_suara', jumlahSuara3.current.value)
         formData3.append('user', 'Udin')
-        
+
         let formData4 = new FormData()
         formData4.append('tps', nomorTps1.current.value)
         formData4.append('kecamatan', dataKec1)
@@ -283,35 +283,35 @@ function TabelData() {
         if (jumlahSuara1.current === 0) {
             setDisBut(true)
         } else
-        if (jumlahSuara2.current === 0) {
-            setDisBut(true)
-        } else
-        if (jumlahSuara3.current === 0) {
-            setDisBut(true)
-        } else
-        if (jumlahSuara4.current === 0) {
-            setDisBut(true)
-        } else
-        if (jumlahSuara5.current === 0) {
-            setDisBut(true)
-        } else
-        if (jumlahSuara6.current === 0) {
-            setDisBut(true)
-        } else
-        if (jumlahSuara7.current === 0) {
-            setDisBut(true)
-        } else
-        if (jumlahSuara8.current === 0) {
-            setDisBut(true)
-        } else
-        if (jumlahSuara9.current === 0) {
-            setDisBut(true)
-        } else
-        if (jumlahSuara10.current === 0) {
-            setDisBut(true)
-        }else {
-            setDisBut(false)
-        }
+            if (jumlahSuara2.current === 0) {
+                setDisBut(true)
+            } else
+                if (jumlahSuara3.current === 0) {
+                    setDisBut(true)
+                } else
+                    if (jumlahSuara4.current === 0) {
+                        setDisBut(true)
+                    } else
+                        if (jumlahSuara5.current === 0) {
+                            setDisBut(true)
+                        } else
+                            if (jumlahSuara6.current === 0) {
+                                setDisBut(true)
+                            } else
+                                if (jumlahSuara7.current === 0) {
+                                    setDisBut(true)
+                                } else
+                                    if (jumlahSuara8.current === 0) {
+                                        setDisBut(true)
+                                    } else
+                                        if (jumlahSuara9.current === 0) {
+                                            setDisBut(true)
+                                        } else
+                                            if (jumlahSuara10.current === 0) {
+                                                setDisBut(true)
+                                            } else {
+                                                setDisBut(false)
+                                            }
     }
     return (
         <MainLayout>
@@ -687,6 +687,12 @@ function TabelData() {
                                     }
                                 }}
                             />
+                            <Button
+                                color="success"
+                                variant="contained"
+                                sx={{ width: "100%" }}>
+                                Upload G4
+                            </Button>
                         </Box>
                     </Grid>
                 </DialogContent>

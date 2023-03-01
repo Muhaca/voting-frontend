@@ -1,4 +1,12 @@
 export const sxTabelData = {
+    textKandidate: {
+        width: '100%',
+        marginBottom: 2,
+        fontSize: 12,
+        "& .MuiInputBase-input.Mui-disabled": {
+            WebkitTextFillColor: "#000000",
+        },
+    },
     container: {
         backgroundColor: "#ffffff",
         display: "flex",

@@ -1,8 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, MenuItem, Select, Slide, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { sxTabelData } from "../assets/sxTabelData";
 import MainLayout from "../layouts/MainLayouts";
-import MockData from "../assets/datakecamatan.json"
 import axios from "axios";
 import { Box } from "@mui/system";
 
@@ -51,36 +50,28 @@ function TabelData() {
     const [openModal, setOpenModal] = useState(false);
     const [dataKecamatan, setDataKecamatan] = useState([]);
     const [dataKelurahan, setDataKelurahan] = useState([]);
-    const [disBut, setDisBut] = useState(true);
-
-
-    //Form Data1
-    const [dataKec1, setDataKec1] = useState('');
-    const [dataKel1, setDataKel1] = useState('');
-    const nomorTps1 = useRef('')
-    const jumlahSuara1 = useRef(0)
-    //Form Data2
-    const jumlahSuara2 = useRef(0)
-    //Form Data3
-    const jumlahSuara3 = useRef(0)
-    //Form Data4
-    const jumlahSuara4 = useRef(0)
-    //Form Data5
-    const jumlahSuara5 = useRef(0)
-    //Form Data2
-    const jumlahSuara6 = useRef(0)
-    //Form Data3
-    const jumlahSuara7 = useRef(0)
-    //Form Data4
-    const jumlahSuara8 = useRef(0)
-    //Form Data5
-    const jumlahSuara9 = useRef(0)
-    //Form Data5
-    const jumlahSuara10 = useRef(0)
+    const [state, setState] = useState({});
+    const [dataKec, setdataKec] = useState('');
+    const [dataKel, setdataKel] = useState('');
+    const [nomorTps, setNomorTps] = useState('');
 
     useEffect(() => {
         getDataVoting();
     }, []);
+
+    const handleChangeValue = (e) => {
+        const jumlahSuara = parseFloat(e.target.value)
+        setState({
+            ...state, [e.target.name]: jumlahSuara
+        })
+    }
+
+    const clearData = () => {
+        setState({})
+        setdataKec('')
+        setdataKel('')
+        setNomorTps('')
+    }
 
     const getDataVoting = async () => {
         const res = await axios.get('http://127.0.0.1:1234/getemployee');
@@ -98,93 +89,99 @@ function TabelData() {
     }
 
     const getdataKelurahan = async () => {
-        let param = dataKec1
+        let param = dataKec
         const res = await axios.get('http://127.0.0.1:1234/getkelurahan?kecamatan=' + param);
         setDataKelurahan(res.data)
+    }
+
+    const submitVoting = () => {
+        addDataVoting();
+        setOpenModal(false);
+        getDataVoting()
     }
 
 
     const addDataVoting = async (e) => {
 
         let formData1 = new FormData()
-        formData1.append('tps', nomorTps1.current.value)
-        formData1.append('kecamatan', dataKec1)
-        formData1.append('kelurahan', dataKel1)
+        formData1.append('tps', nomorTps)
+        formData1.append('kecamatan', dataKec)
+        formData1.append('kelurahan', dataKel)
         formData1.append('nama', 'adi')
-        formData1.append('jumlah_suara', jumlahSuara1.current.value)
+        formData1.append('jumlah_suara', state.jumlah_suara_1)
         formData1.append('user', 'Udin')
 
         let formData2 = new FormData()
-        formData2.append('tps', nomorTps1.current.value)
-        formData2.append('kecamatan', dataKec1)
-        formData2.append('kelurahan', dataKel1)
+        formData2.append('tps', nomorTps)
+        formData2.append('kecamatan', dataKec)
+        formData2.append('kelurahan', dataKel)
         formData2.append('nama', "jenda")
-        formData2.append('jumlah_suara', jumlahSuara2.current.value)
+        formData2.append('jumlah_suara', state.jumlah_suara_2)
         formData2.append('user', 'Udin')
 
         let formData3 = new FormData()
-        formData3.append('tps', nomorTps1.current.value)
-        formData3.append('kecamatan', dataKec1)
-        formData3.append('kelurahan', dataKel1)
+        formData3.append('tps', nomorTps)
+        formData3.append('kecamatan', dataKec)
+        formData3.append('kelurahan', dataKel)
         formData3.append('nama', "luna")
-        formData3.append('jumlah_suara', jumlahSuara3.current.value)
+        formData3.append('jumlah_suara', state.jumlah_suara_3)
         formData3.append('user', 'Udin')
 
         let formData4 = new FormData()
-        formData4.append('tps', nomorTps1.current.value)
-        formData4.append('kecamatan', dataKec1)
-        formData4.append('kelurahan', dataKel1)
+        formData4.append('tps', nomorTps)
+        formData4.append('kecamatan', dataKec)
+        formData4.append('kelurahan', dataKel)
         formData4.append('nama', 'bambang')
-        formData4.append('jumlah_suara', jumlahSuara4.current.value)
+        formData4.append('jumlah_suara', state.jumlah_suara_4)
         formData4.append('user', 'Udin')
 
         let formData5 = new FormData()
-        formData5.append('tps', nomorTps1.current.value)
-        formData5.append('kecamatan', dataKec1)
-        formData5.append('kelurahan', dataKel1)
+        formData5.append('tps', nomorTps)
+        formData5.append('kecamatan', dataKec)
+        formData5.append('kelurahan', dataKel)
         formData5.append('nama', "asep kurniawan")
-        formData5.append('jumlah_suara', jumlahSuara5.current.value)
+        formData5.append('jumlah_suara', state.jumlah_suara_5)
         formData5.append('user', 'Udin')
 
         let formData6 = new FormData()
-        formData6.append('tps', nomorTps1.current.value)
-        formData6.append('kecamatan', dataKec1)
-        formData6.append('kelurahan', dataKel1)
+        formData6.append('tps', nomorTps)
+        formData6.append('kecamatan', dataKec)
+        formData6.append('kelurahan', dataKel)
         formData6.append('nama', "sitri badria")
-        formData6.append('jumlah_suara', jumlahSuara6.current.value)
+        formData6.append('jumlah_suara', state.jumlah_suara_6)
         formData6.append('user', 'Udin')
 
 
         let formData7 = new FormData()
-        formData7.append('tps', nomorTps1.current.value)
-        formData7.append('kecamatan', dataKec1)
-        formData7.append('kelurahan', dataKel1)
+        formData7.append('tps', nomorTps)
+        formData7.append('kecamatan', dataKec)
+        formData7.append('kelurahan', dataKel)
         formData7.append('nama', "rieke diah pitaloka")
-        formData7.append('jumlah_suara', jumlahSuara7.current.value)
+        formData7.append('jumlah_suara', state.jumlah_suara_7)
         formData7.append('user', 'Udin')
 
         let formData8 = new FormData()
-        formData8.append('tps', nomorTps1.current.value)
-        formData8.append('kecamatan', dataKec1)
-        formData8.append('kelurahan', dataKel1)
+        formData8.append('tps', nomorTps)
+        formData8.append('kecamatan', dataKec)
+        formData8.append('kelurahan', dataKel)
         formData8.append('nama', "budi")
-        formData8.append('jumlah_suara', jumlahSuara8.current.value)
+        formData8.append('jumlah_suara', state.jumlah_suara_8)
         formData8.append('user', 'Udin')
 
         let formData9 = new FormData()
-        formData9.append('tps', nomorTps1.current.value)
-        formData9.append('kecamatan', dataKec1)
-        formData9.append('kelurahan', dataKel1)
+        formData9.append('tps', nomorTps)
+        formData9.append('kecamatan', dataKec)
+        formData9.append('kelurahan', dataKel)
         formData9.append('nama', 'sumanto')
-        formData9.append('juvaluemlah_suara', jumlahSuara9.current.value)
+        formData9.append('jumlah_suara', state.jumlah_suara_9)
         formData9.append('user', 'Udin')
 
         let formData10 = new FormData()
-        formData10.append('tps', nomorTps1.current.value)
-        formData10.append('kecamatan', dataKec1)
-        formData10.append('kelurahan', dataKel1)
+        formData10.append('tps', nomorTps)
+        formData10.append('kecamatan', dataKec)
+        formData10.append('kelurahan', dataKel)
         formData10.append('nama', "ridho")
-        formData10.append('jumlah_suara', jumlahSuara10.current.value)
+        formData10.append('jumlah_suara', state.jumlah_suara_10)
         formData10.append('user', 'Udin')
 
 
@@ -192,127 +189,33 @@ function TabelData() {
             headers: { 'content-type': 'multipart/form-data' }
         }
 
-        await axios.post(
-            'http://127.0.0.1:1234/insertemployee', formData1, config
-        ).then(response => {
-        })
-            .catch(error => {
+        let req = axios
+        await req.post('http://127.0.0.1:1234/insertemployee', formData1, config)
+        await req.post('http://127.0.0.1:1234/insertemployee', formData2, config)
+        await req.post('http://127.0.0.1:1234/insertemployee', formData3, config)
+        await req.post('http://127.0.0.1:1234/insertemployee', formData4, config)
+        await req.post('http://127.0.0.1:1234/insertemployee', formData5, config)
+        await req.post('http://127.0.0.1:1234/insertemployee', formData6, config)
+        await req.post('http://127.0.0.1:1234/insertemployee', formData7, config)
+        await req.post('http://127.0.0.1:1234/insertemployee', formData8, config)
+        await req.post('http://127.0.0.1:1234/insertemployee', formData9, config)
+        await req.post('http://127.0.0.1:1234/insertemployee', formData10, config)
 
-            });
 
-        await axios.post(
-            'http://127.0.0.1:1234/insertemployee', formData2, config
-        ).then(response => {
-
-        })
-            .catch(error => {
-
-            });
-
-        await axios.post(
-            'http://127.0.0.1:1234/insertemployee', formData3, config
-        ).then(response => {
-
-        })
-            .catch(error => {
-
-            });
-        await axios.post(
-            'http://127.0.0.1:1234/insertemployee', formData4, config
-        ).then(response => {
-
-        })
-            .catch(error => {
-
-            });
-
-        await axios.post(
-            'http://127.0.0.1:1234/insertemployee', formData5, config
-        ).then(response => {
-
-        })
-            .catch(error => {
-
-            });
-
-        await axios.post(
-            'http://127.0.0.1:1234/insertemployee', formData6, config
-        ).then(response => {
-
-        })
-            .catch(error => {
-
-            });
-        await axios.post(
-            'http://127.0.0.1:1234/insertemployee', formData7, config
-        ).then(response => {
-
-        })
-            .catch(error => {
-
-            });
-
-        await axios.post(
-            'http://127.0.0.1:1234/insertemployee', formData8, config
-        ).then(response => {
-
-        })
-            .catch(error => {
-
-            });
-
-        await axios.post(
-            'http://127.0.0.1:1234/insertemployee', formData9, config
-        ).then(response => {
-
-        })
-            .catch(error => {
-
-            });
-        await axios.post(
-            'http://127.0.0.1:1234/insertemployee', formData10, config
-        ).then(response => {
-
-        })
-            .catch(error => {
-
-            });
+        // let res_1 = await req.post('http://127.0.0.1:1234/insertemployee', formData1, config)
+        // let res_2 = await req.post('http://127.0.0.1:1234/insertemployee', formData2, config)
+        // let res_3 = await req.post('http://127.0.0.1:1234/insertemployee', formData3, config)
+        // let res_4 = await req.post('http://127.0.0.1:1234/insertemployee', formData4, config)
+        // let res_5 = await req.post('http://127.0.0.1:1234/insertemployee', formData5, config)
+        // let res_6 = await req.post('http://127.0.0.1:1234/insertemployee', formData6, config)
+        // let res_7 = await req.post('http://127.0.0.1:1234/insertemployee', formData7, config)
+        // let res_8 = await req.post('http://127.0.0.1:1234/insertemployee', formData8, config)
+        // let res_9 = await req.post('http://127.0.0.1:1234/insertemployee', formData9, config)
+        // let res_10 = await req.post('http://127.0.0.1:1234/insertemployee', formData10, config)
+        // console.log(res_1, res_2, res_3, res_4, res_5, res_6, res_7, res_8, res_9, res_10);
     }
 
-    const disableButtun = () => {
-        if (jumlahSuara1.current === 0) {
-            setDisBut(true)
-        } else
-            if (jumlahSuara2.current === 0) {
-                setDisBut(true)
-            } else
-                if (jumlahSuara3.current === 0) {
-                    setDisBut(true)
-                } else
-                    if (jumlahSuara4.current === 0) {
-                        setDisBut(true)
-                    } else
-                        if (jumlahSuara5.current === 0) {
-                            setDisBut(true)
-                        } else
-                            if (jumlahSuara6.current === 0) {
-                                setDisBut(true)
-                            } else
-                                if (jumlahSuara7.current === 0) {
-                                    setDisBut(true)
-                                } else
-                                    if (jumlahSuara8.current === 0) {
-                                        setDisBut(true)
-                                    } else
-                                        if (jumlahSuara9.current === 0) {
-                                            setDisBut(true)
-                                        } else
-                                            if (jumlahSuara10.current === 0) {
-                                                setDisBut(true)
-                                            } else {
-                                                setDisBut(false)
-                                            }
-    }
+
     return (
         <MainLayout>
             <div style={sx.container}>
@@ -386,7 +289,7 @@ function TabelData() {
                 open={openModal}
                 TransitionComponent={Transition}
                 keepMounted
-                onClose={() => setOpenModal(false)}
+                onClose={() => { setOpenModal(false); clearData() }}
                 PaperProps={{
                     style: { ...sx.dialogCredit }
                 }}
@@ -399,7 +302,8 @@ function TabelData() {
                                 label="Nomor TPS"
                                 size="small"
                                 sx={{ width: '100%', marginBottom: 2 }}
-                                inputRef={nomorTps1}
+                                value={nomorTps}
+                                onChange={(e) => setNomorTps(e.target.value)}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12
@@ -409,8 +313,8 @@ function TabelData() {
                             <Typography sx={sx.textCellBlack1}>Kecamatan</Typography>
                             <Select
                                 onOpen={getKecamatan}
-                                value={dataKec1}
-                                onChange={(e) => setDataKec1(e.target.value)}
+                                value={dataKec}
+                                onChange={(e) => setdataKec(e.target.value)}
                                 size="small"
                                 sx={{ width: '100%', marginBottom: 2 }}>
                                 {dataKecamatan.map((value, index) => (
@@ -420,8 +324,8 @@ function TabelData() {
                             <Typography sx={sx.textCellBlack1}>Kelurahan</Typography>
                             <Select
                                 onOpen={getdataKelurahan}
-                                value={dataKel1}
-                                onChange={(e) => setDataKel1(e.target.value)}
+                                value={dataKel}
+                                onChange={(e) => setdataKel(e.target.value)}
                                 size="small"
                                 sx={{ width: '100%', marginBottom: 2 }}>
                                 {dataKelurahan.map((value, index) => (
@@ -433,7 +337,7 @@ function TabelData() {
                                 defaultValue="adi"
                                 size="small"
                                 disabled={true}
-                                sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
+                                sx={sx.textKandidate}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12,
@@ -446,7 +350,9 @@ function TabelData() {
                                 size="small"
                                 type="number"
                                 sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
-                                inputRef={jumlahSuara1}
+                                name="jumlah_suara_1"
+                                value={state.jumlah_suara_1 || ''}
+                                onChange={handleChangeValue}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12
@@ -459,7 +365,7 @@ function TabelData() {
                                 defaultValue="jenda"
                                 size="small"
                                 disabled={true}
-                                sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
+                                sx={sx.textKandidate}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12,
@@ -472,7 +378,9 @@ function TabelData() {
                                 size="small"
                                 type="number"
                                 sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
-                                inputRef={jumlahSuara2}
+                                name="jumlah_suara_2"
+                                value={state.jumlah_suara_2 || ''}
+                                onChange={handleChangeValue}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12
@@ -485,7 +393,7 @@ function TabelData() {
                                 defaultValue="luna"
                                 size="small"
                                 disabled={true}
-                                sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
+                                sx={sx.textKandidate}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12,
@@ -498,7 +406,9 @@ function TabelData() {
                                 size="small"
                                 type="number"
                                 sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
-                                inputRef={jumlahSuara3}
+                                name="jumlah_suara_3"
+                                value={state.jumlah_suara_3 || ''}
+                                onChange={handleChangeValue}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12
@@ -511,7 +421,7 @@ function TabelData() {
                                 defaultValue="bambang"
                                 size="small"
                                 disabled={true}
-                                sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
+                                sx={sx.textKandidate}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12,
@@ -524,7 +434,9 @@ function TabelData() {
                                 size="small"
                                 type="number"
                                 sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
-                                inputRef={jumlahSuara4}
+                                name="jumlah_suara_4"
+                                value={state.jumlah_suara_4 || ''}
+                                onChange={handleChangeValue}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12
@@ -537,7 +449,7 @@ function TabelData() {
                                 defaultValue="asep kurniawan"
                                 size="small"
                                 disabled={true}
-                                sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
+                                sx={sx.textKandidate}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12,
@@ -550,7 +462,9 @@ function TabelData() {
                                 size="small"
                                 type="number"
                                 sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
-                                inputRef={jumlahSuara5}
+                                name="jumlah_suara_5"
+                                value={state.jumlah_suara_5 || ''}
+                                onChange={handleChangeValue}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12
@@ -563,7 +477,7 @@ function TabelData() {
                                 defaultValue="sitri badria"
                                 size="small"
                                 disabled={true}
-                                sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
+                                sx={sx.textKandidate}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12,
@@ -576,7 +490,9 @@ function TabelData() {
                                 size="small"
                                 type="number"
                                 sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
-                                inputRef={jumlahSuara6}
+                                name="jumlah_suara_6"
+                                value={state.jumlah_suara_6 || ''}
+                                onChange={handleChangeValue}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12
@@ -589,7 +505,7 @@ function TabelData() {
                                 defaultValue="rieke diah pitaloka"
                                 size="small"
                                 disabled={true}
-                                sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
+                                sx={sx.textKandidate}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12,
@@ -602,7 +518,9 @@ function TabelData() {
                                 size="small"
                                 type="number"
                                 sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
-                                inputRef={jumlahSuara7}
+                                name="jumlah_suara_7"
+                                value={state.jumlah_suara_7 || ''}
+                                onChange={handleChangeValue}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12
@@ -615,7 +533,7 @@ function TabelData() {
                                 defaultValue="budi"
                                 size="small"
                                 disabled={true}
-                                sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
+                                sx={sx.textKandidate}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12,
@@ -628,7 +546,9 @@ function TabelData() {
                                 size="small"
                                 type="number"
                                 sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
-                                inputRef={jumlahSuara8}
+                                name="jumlah_suara_8"
+                                value={state.jumlah_suara_8 || ''}
+                                onChange={handleChangeValue}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12
@@ -641,7 +561,7 @@ function TabelData() {
                                 defaultValue="sumanto"
                                 size="small"
                                 disabled={true}
-                                sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
+                                sx={sx.textKandidate}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12,
@@ -654,7 +574,9 @@ function TabelData() {
                                 size="small"
                                 type="number"
                                 sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
-                                inputRef={jumlahSuara9}
+                                name="jumlah_suara_9"
+                                value={state.jumlah_suara_9 || ''}
+                                onChange={handleChangeValue}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12
@@ -667,7 +589,7 @@ function TabelData() {
                                 defaultValue="ridho"
                                 size="small"
                                 disabled={true}
-                                sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
+                                sx={sx.textKandidate}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12,
@@ -680,7 +602,9 @@ function TabelData() {
                                 size="small"
                                 type="number"
                                 sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
-                                inputRef={jumlahSuara10}
+                                name="jumlah_suara_10"
+                                value={state.jumlah_suara_10 || ''}
+                                onChange={handleChangeValue}
                                 InputLabelProps={{
                                     style: {
                                         fontSize: 12
@@ -691,7 +615,7 @@ function TabelData() {
                                 color="success"
                                 variant="contained"
                                 sx={{ width: "100%" }}>
-                                Upload G4
+                                Upload C4
                             </Button>
                         </Box>
                     </Grid>
@@ -700,14 +624,21 @@ function TabelData() {
                     <Button
                         color="warning"
                         variant="outlined"
-                        onClick={() => setOpenModal(false)}
+                        onClick={() => { setOpenModal(false); clearData() }}
                         sx={{ width: "100%" }}>
                         Batal
                     </Button>
                     <Button
+                        disabled={
+                            !state.jumlah_suara_1 || !state.jumlah_suara_2 || !state.jumlah_suara_3 ||
+                                !state.jumlah_suara_4 || !state.jumlah_suara_5 || !state.jumlah_suara_6 ||
+                                !state.jumlah_suara_7 || !state.jumlah_suara_8 || !state.jumlah_suara_9 ||
+                                !state.jumlah_suara_10 || !dataKec || !dataKel || !nomorTps
+                                ? true : false
+                        }
                         color="warning"
                         variant="contained"
-                        onClick={() => { addDataVoting(); setOpenModal(false); getDataVoting() }}
+                        onClick={submitVoting}
                         sx={{ width: "100%" }}>
                         Simpan
                     </Button>

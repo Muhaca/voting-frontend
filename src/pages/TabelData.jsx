@@ -1,9 +1,11 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, MenuItem, Select, Slide, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, IconButton, MenuItem, Select, Slide, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
 import { sxTabelData } from "../assets/sxTabelData";
 import MainLayout from "../layouts/MainLayouts";
 import axios from "axios";
 import { Box } from "@mui/system";
+import CloseIcon from '@mui/icons-material/Close';
+import exifr from "exifr";
 
 const columns = [
     {
@@ -47,7 +49,7 @@ function TabelData() {
 
     const sx = sxTabelData;
     const [voting, setVoting] = useState([]);
-    const [openModal, setOpenModal] = useState(false);
+    const [openForm, setOpenForm] = useState(false);
     const [dataKecamatan, setDataKecamatan] = useState([]);
     const [dataKelurahan, setDataKelurahan] = useState([]);
     const [state, setState] = useState({});
@@ -55,6 +57,10 @@ function TabelData() {
     const [dataKel, setdataKel] = useState('');
     const [nomorTps, setNomorTps] = useState('');
     const [upload, setUpload] = useState(null);
+    const [openGambar, setOpenGambar] = useState(false);
+    const dataPhoto = useRef(null)
+    const latitudePhoto = useRef(null)
+    const longitudePhoto = useRef(null)
 
     useEffect(() => {
         getDataVoting();
@@ -101,18 +107,17 @@ function TabelData() {
         reader.onload = () => {
             setUpload(reader.result)
         }
-        // setUpload(e.target.files[0])
     };
 
-    const submitVoting = () => {
-        addDataVoting();
-        setOpenModal(false);
-        // getDataVoting()
+    const handleView = async (data) => {
+        let { latitude, longitude } = await exifr.gps(data)
+        dataPhoto.current = data
+        latitudePhoto.current = latitude
+        longitudePhoto.current = longitude
+        setOpenGambar(true)
     }
-
     const addDataVoting = async (e) => {
 
-        console.log(upload);
         let formData1 = new FormData()
         formData1.append('tps', nomorTps)
         formData1.append('kecamatan', dataKec)
@@ -219,18 +224,13 @@ function TabelData() {
         await req.post('http://127.0.0.1:1234/insertemployee', formData9, config)
         await req.post('http://127.0.0.1:1234/insertemployee', formData10, config)
 
+        await getDataVoting()
+    }
 
-        // let res_1 = await req.post('http://127.0.0.1:1234/insertemployee', formData1, config)
-        // let res_2 = await req.post('http://127.0.0.1:1234/insertemployee', formData2, config)
-        // let res_3 = await req.post('http://127.0.0.1:1234/insertemployee', formData3, config)
-        // let res_4 = await req.post('http://127.0.0.1:1234/insertemployee', formData4, config)
-        // let res_5 = await req.post('http://127.0.0.1:1234/insertemployee', formData5, config)
-        // let res_6 = await req.post('http://127.0.0.1:1234/insertemployee', formData6, config)
-        // let res_7 = await req.post('http://127.0.0.1:1234/insertemployee', formData7, config)
-        // let res_8 = await req.post('http://127.0.0.1:1234/insertemployee', formData8, config)
-        // let res_9 = await req.post('http://127.0.0.1:1234/insertemployee', formData9, config)
-        // let res_10 = await req.post('http://127.0.0.1:1234/insertemployee', formData10, config)
-        // console.log(res_1, res_2, res_3, res_4, res_5, res_6, res_7, res_8, res_9, res_10);
+    const submitVoting = () => {
+        addDataVoting();
+        setOpenForm(false);
+        clearData()
     }
 
 
@@ -243,7 +243,7 @@ function TabelData() {
                         variant="contained"
                         color="warning"
                         sx={{ textTransform: "none", marginBottom: 2 }}
-                        onClick={() => setOpenModal(true)}
+                        onClick={() => setOpenForm(true)}
                     >Tambah Data Suara Baru</Button>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
@@ -283,6 +283,7 @@ function TabelData() {
                                                         }
                                                         {rows.id === 'gambar' &&
                                                             <Button
+                                                                onClick={() => handleView(values.gambar)}
                                                                 disabled={values.gambar ? false : true}
                                                                 sx={sx.textCellBlack1}>
                                                                 Lihat Gambar
@@ -308,10 +309,38 @@ function TabelData() {
                 </TableContainer>
             </div>
             <Dialog
-                open={openModal}
+                open={openGambar}
                 TransitionComponent={Transition}
                 keepMounted
-                onClose={() => { setOpenModal(false); clearData() }}
+                onClose={() => setOpenGambar(false)}
+                PaperProps={{
+                    style: { ...sx.dialogCarousel }
+                }}
+            >
+                <div style={sx.dialogHead}>
+                    <DialogTitle sx={{ fontSize: "18px", fontWeight: "700" }}>Lihat Photo</DialogTitle>
+                    <IconButton onClick={() => setOpenGambar(false)}>
+                        <CloseIcon />
+                    </IconButton>
+                </div>
+                <DialogContent >
+                    <Grid style={sx.itemCarousel} >
+                        <img src={dataPhoto.current} alt="" style={sx.imgVisit} />
+                        <iframe style={sx.iframeMaps} title="maps"
+                            src={"https://maps.google.com/maps?q="
+                                + latitudePhoto.current + "+" + longitudePhoto.current
+                                + "&hl=es&z=14&output=embed"}
+                        >
+                        </iframe>
+                    </Grid>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog
+                open={openForm}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={() => { setOpenForm(false); clearData() }}
                 PaperProps={{
                     style: { ...sx.dialogCredit }
                 }}
@@ -654,7 +683,7 @@ function TabelData() {
                     <Button
                         color="warning"
                         variant="outlined"
-                        onClick={() => { setOpenModal(false); clearData() }}
+                        onClick={() => { setOpenForm(false); clearData() }}
                         sx={{ width: "100%" }}>
                         Batal
                     </Button>

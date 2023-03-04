@@ -194,5 +194,60 @@ export const sxTabelData = {
         borderRadius: "10px",
         overflow: "hidden",
         border: "1px solid #E2E3E9"
-    }
+    },    dialogHead: {
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "0px",
+        height: "40px",
+        alignContent: "center"
+    },
+    iconClose: {
+        width: "100%",
+        height: "100%",
+        alignContent: "center",
+        padding: "20px",
+        cursor: "pointer"
+    },
+
+    divCarousel: {
+        display: "flex",
+        gridAutoFlow: "column",
+        scrollBehavior: "auto",
+        gap: "1.2rem",
+        overflowY: "auto",
+        overflowX: "scroll",
+        overscrollBehaviorX: "contain",
+        scrollSnapType: "x mandatory",
+        scrollbarWidth: "auto",
+        touchAction: "pan-x",
+        WebkitOverflowScrolling: "touch"
+    },
+    itemCarousel: {
+        width: "480px",
+        height: "300px",
+        float: "left",
+        position: "relative",
+        scrollSnapAlign: "start"
+    },
+    iframeMaps: {
+        width: "480px",
+        height: "60%",
+        frameBorder: "0px",
+        scrolling: "no",
+        marginHeight: "0",
+        marginWidth: "0",
+        marginTop: '5px',
+        border: "0px"
+    },
+    dialogCarousel: {
+        height: "800px",
+        position: 'absolute',
+        borderRadius: '10px'
+    },
+    imgVisit: {
+        width: "480px",
+        height: "90%",
+        alignContent: "center",
+        borderRadius: "6px"
+    },
 }

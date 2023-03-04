@@ -10,7 +10,7 @@ const ChartKecamatan = ({ apiResponse }) => {
             obj[name] = value;
             return obj;
         }, {});
-        const kelurahanData = [
+        const kecamatanData = [
             kelurahan,
             suara.total_suara_1 || 0,
             suara.total_suara_2 || 0,
@@ -23,7 +23,7 @@ const ChartKecamatan = ({ apiResponse }) => {
             suara.total_suara_9 || 0,
             suara.total_suara_10 || 0
         ];
-        acc.push(kelurahanData);
+        acc.push(kecamatanData);
         return acc;
     }, [[
         "Kelurahan",
@@ -38,7 +38,6 @@ const ChartKecamatan = ({ apiResponse }) => {
         "Sumanto",
         "Ridho"
     ]]);
-    console.log(data);
 
     return (
         <Chart

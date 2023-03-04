@@ -10,11 +10,35 @@ const ChartKelurahan = ({ apiResponse }) => {
             obj[name] = value;
             return obj;
         }, {});
-        const kelurahanData = [kelurahan, suara.total_suara_1 || 0, suara.total_suara_2 || 0, suara.total_suara_3 || 0];
+        const kelurahanData = [
+            kelurahan,
+            suara.total_suara_1 || 0,
+            suara.total_suara_2 || 0,
+            suara.total_suara_3 || 0,
+            suara.total_suara_4 || 0,
+            suara.total_suara_5 || 0,
+            suara.total_suara_6 || 0,
+            suara.total_suara_7 || 0,
+            suara.total_suara_8 || 0,
+            suara.total_suara_9 || 0,
+            suara.total_suara_10 || 0
+        ];
         console.log();
         acc.push(kelurahanData);
         return acc;
-    }, [["Kelurahan", "Adi", "Jenda", "Luna"]]);
+    },[[
+        "Kelurahan",
+        "Adi",
+        "Jenda",
+        "Luna",
+        "Bambang",
+        "Asep Kurniawan",
+        "Sitri Badriah",
+        "Rieke Diah Pitaloka",
+        "Budi",
+        "Sumanto",
+        "Ridho"
+    ]]);
 
     return (
         <Chart

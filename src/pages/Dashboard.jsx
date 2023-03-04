@@ -1,26 +1,11 @@
-import { Typography, Paper, Select, MenuItem, Grid } from "@mui/material";
+import { Typography, Paper, Grid } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Chart from "react-google-charts";
 import { sxDashboard } from "../assets/sxDashboard";
 import MainLayout from "../layouts/MainLayouts";
-import MockData from "../assets/datakecamatan.json"
-import ChartKecamatan from "./ChartKecamatan";
-import ChartKelurahan from "./ChartKelurahan";
-
-const dataBarKel = [
-    ["Kelurahan", "Adi", "Jenda", "Luna"],
-    ["Dawuan", 30, 40, 290],
-    ["Cikalong", 170, 60, 40],
-    ["Jatisari", 90, 270, 30],
-];
-
-const optionsBar = {
-    legend: {
-        position: 'bottom',
-    },
-    chartArea: { 'width': '90%', 'height': '100%' }
-};
+import ChartKecamatan from "../components/ChartKecamatan";
+import ChartKelurahan from "../components/ChartKelurahan";
 
 const optionsPie = {
     legend: {
@@ -43,8 +28,8 @@ function Dashboard() {
 
     useEffect(() => {
         getDataVoting();
-        // getData()
-        // getDataKel()
+        getData()
+        getDataKel()
 
     }, []);
 
@@ -55,7 +40,6 @@ function Dashboard() {
 
     const getData = async () => {
         const res = await axios.get('http://127.0.0.1:1234/gettotaldata');
-        console.log(res.data);
         seTotalData(res.data);
     }
 
@@ -69,7 +53,7 @@ function Dashboard() {
     //     const res = await axios({
     //         method: 'get',
     //         url: `http://192.168.184.253:1234/gettotaldatakecamatan`,
-    //         withCredentials: false,9) => {
+    //         withCredentials: false,
     //     const res = await axios({
     //         method: 'get',
     //         url: `http://192.168.184.253:1234/gettotaldatakelurahan`,
@@ -116,12 +100,12 @@ function Dashboard() {
                         options={optionsPie}
                     />
                 </Paper>
-                {/* <Paper elevation={3} sx={{ padding: 3 }}>
+                <Paper elevation={3} sx={{ padding: 3 }}>
                     <Grid container sx={sx.headerComponent}>
                         <Grid item sx={sx.gridItemHeader}>
                             <Typography sx={sx.titleChart}>Per Kecamatan</Typography>
                         </Grid>
-                        <Grid item sx={sx.gridItemHeader}>
+                        {/* <Grid item sx={sx.gridItemHeader}>
                             <Select
                                 label="Pilih Kecamatan"
                                 value={filterKec}
@@ -132,7 +116,7 @@ function Dashboard() {
                                     <MenuItem key={index} value={value.kecamatan}>{value.kecamatan}</MenuItem>
                                 ))}
                             </Select>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                     <ChartKecamatan apiResponse={totalData} />
                 </Paper>
@@ -141,7 +125,7 @@ function Dashboard() {
                         <Grid item sx={sx.gridItemHeader}>
                             <Typography sx={sx.titleChart}>Per Kelurahan</Typography>
                         </Grid>
-                        <Grid item sx={sx.gridItemHeader}>
+                        {/* <Grid item sx={sx.gridItemHeader}>
                             <Select
                                 label="Pilih Kelurahan"
                                 value={filterKel}
@@ -152,10 +136,10 @@ function Dashboard() {
                                     <MenuItem key={index} value={value.kelurahan}>{value.kelurahan}</MenuItem>
                                 ))}
                             </Select>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                     <ChartKelurahan apiResponse={dataKel}/>
-                </Paper> */}
+                </Paper>
             </div>
         </MainLayout>
     );

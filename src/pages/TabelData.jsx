@@ -54,6 +54,7 @@ function TabelData() {
     const [dataKec, setdataKec] = useState('');
     const [dataKel, setdataKel] = useState('');
     const [nomorTps, setNomorTps] = useState('');
+    const [upload, setUpload] = useState(null);
 
     useEffect(() => {
         getDataVoting();
@@ -94,15 +95,24 @@ function TabelData() {
         setDataKelurahan(res.data)
     }
 
+    const uploadGambar = e => {
+        const reader = new FileReader()
+        reader.readAsDataURL(e.target.files[0])
+        reader.onload = () => {
+            setUpload(reader.result)
+        }
+        // setUpload(e.target.files[0])
+    };
+
     const submitVoting = () => {
         addDataVoting();
         setOpenModal(false);
-        getDataVoting()
+        // getDataVoting()
     }
-
 
     const addDataVoting = async (e) => {
 
+        console.log(upload);
         let formData1 = new FormData()
         formData1.append('tps', nomorTps)
         formData1.append('kecamatan', dataKec)
@@ -110,6 +120,7 @@ function TabelData() {
         formData1.append('nama', 'adi')
         formData1.append('jumlah_suara', state.jumlah_suara_1)
         formData1.append('user', 'Udin')
+        formData1.append('gambar', upload)
 
         let formData2 = new FormData()
         formData2.append('tps', nomorTps)
@@ -118,6 +129,7 @@ function TabelData() {
         formData2.append('nama', "jenda")
         formData2.append('jumlah_suara', state.jumlah_suara_2)
         formData2.append('user', 'Udin')
+        formData2.append('gambar', upload)
 
         let formData3 = new FormData()
         formData3.append('tps', nomorTps)
@@ -126,6 +138,7 @@ function TabelData() {
         formData3.append('nama', "luna")
         formData3.append('jumlah_suara', state.jumlah_suara_3)
         formData3.append('user', 'Udin')
+        formData3.append('gambar', upload)
 
         let formData4 = new FormData()
         formData4.append('tps', nomorTps)
@@ -134,6 +147,7 @@ function TabelData() {
         formData4.append('nama', 'bambang')
         formData4.append('jumlah_suara', state.jumlah_suara_4)
         formData4.append('user', 'Udin')
+        formData4.append('gambar', upload)
 
         let formData5 = new FormData()
         formData5.append('tps', nomorTps)
@@ -142,6 +156,7 @@ function TabelData() {
         formData5.append('nama', "asep kurniawan")
         formData5.append('jumlah_suara', state.jumlah_suara_5)
         formData5.append('user', 'Udin')
+        formData5.append('gambar', upload)
 
         let formData6 = new FormData()
         formData6.append('tps', nomorTps)
@@ -150,7 +165,7 @@ function TabelData() {
         formData6.append('nama', "sitri badria")
         formData6.append('jumlah_suara', state.jumlah_suara_6)
         formData6.append('user', 'Udin')
-
+        formData6.append('gambar', upload)
 
         let formData7 = new FormData()
         formData7.append('tps', nomorTps)
@@ -159,6 +174,7 @@ function TabelData() {
         formData7.append('nama', "rieke diah pitaloka")
         formData7.append('jumlah_suara', state.jumlah_suara_7)
         formData7.append('user', 'Udin')
+        formData7.append('gambar', upload)
 
         let formData8 = new FormData()
         formData8.append('tps', nomorTps)
@@ -167,6 +183,7 @@ function TabelData() {
         formData8.append('nama', "budi")
         formData8.append('jumlah_suara', state.jumlah_suara_8)
         formData8.append('user', 'Udin')
+        formData8.append('gambar', upload)
 
         let formData9 = new FormData()
         formData9.append('tps', nomorTps)
@@ -175,6 +192,7 @@ function TabelData() {
         formData9.append('nama', 'sumanto')
         formData9.append('jumlah_suara', state.jumlah_suara_9)
         formData9.append('user', 'Udin')
+        formData9.append('gambar', upload)
 
         let formData10 = new FormData()
         formData10.append('tps', nomorTps)
@@ -183,7 +201,7 @@ function TabelData() {
         formData10.append('nama', "ridho")
         formData10.append('jumlah_suara', state.jumlah_suara_10)
         formData10.append('user', 'Udin')
-
+        formData10.append('gambar', upload)
 
         const config = {
             headers: { 'content-type': 'multipart/form-data' }
@@ -264,7 +282,11 @@ function TabelData() {
                                                             <Typography sx={sx.textCellBlack1}>{values.User}</Typography>
                                                         }
                                                         {rows.id === 'gambar' &&
-                                                            <Typography sx={sx.textCellBlack1}>{values.gambar}</Typography>
+                                                            <Button
+                                                                disabled={values.gambar ? false : true}
+                                                                sx={sx.textCellBlack1}>
+                                                                Lihat Gambar
+                                                            </Button>
                                                         }
                                                         {rows.id === 'jumlah' &&
                                                             <Typography sx={sx.textCellBlack1}>{values.JumlahSuara}</Typography>
@@ -615,7 +637,15 @@ function TabelData() {
                                 color="success"
                                 variant="contained"
                                 sx={{ width: "100%" }}>
-                                Upload C4
+                                <label
+                                    style={{ width: '100%' }}
+                                    htmlFor="upload-photo">
+                                    Upload C4
+                                </label>
+                                <input
+                                    id="upload-photo"
+                                    type="file"
+                                    style={{ opacity: 0, width: 0 }} onChange={uploadGambar} />
                             </Button>
                         </Box>
                     </Grid>

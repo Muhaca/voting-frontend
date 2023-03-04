@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
-import TabelData from "./components/TabelData";
+import Dashboard from "./pages/Dashboard";
+import TabelData from "./pages/TabelData";
 import Login from "./components/Login";
 
 function App() {
@@ -13,12 +13,6 @@ function App() {
         <Route path="/data" element={<TabelData />} />
       </Routes>
     </Router>
-    // <div>
-    //   <MainAppBar />
-    //   <MainLayout>
-    //     <Dashboard />
-    //   </MainLayout>
-    // </div>
   );
 }
 

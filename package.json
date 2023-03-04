@@ -11,6 +11,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.3.4",
+    "env-cmd": "^10.1.0",
     "exifr": "^7.1.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -20,10 +21,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start-dev-voting": "env-cmd -e development-voting react-scripts start",
+    "build-dev-voting": "set \"GENERATE_SOURCEMAP=false\" && env-cmd -e development-voting react-scripts build",
+    "start-staging-voting": "env-cmd -e staging-voting react-scripts start",
+    "build-staging-voting": "set \"GENERATE_SOURCEMAP=false\" && env-cmd -e staging-voting react-scripts build",
+    "start-production-voting": "env-cmd -e staging-voting react-scripts start",
+    "build-production-voting": "set \"GENERATE_SOURCEMAP=false\" && env-cmd -e staging-voting react-scripts build"
   },
   "eslintConfig": {
     "extends": [

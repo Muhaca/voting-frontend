@@ -34,17 +34,17 @@ function Dashboard() {
     }, []);
 
     const getDataVoting = async () => {
-        const res = await axios.get('http://127.0.0.1:1234/getemployee');
+        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/getemployee');
         setVoting(res.data.Data);
     }
 
     const getData = async () => {
-        const res = await axios.get('http://127.0.0.1:1234/gettotaldata');
+        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/gettotaldata');
         seTotalData(res.data);
     }
 
-    const getDataKel= async () => {
-        const res = await axios.get('http://127.0.0.1:1234/gettotaldatakel');
+    const getDataKel = async () => {
+        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/gettotaldatakel');
         setDataKel(res.data);
     }
 
@@ -86,9 +86,9 @@ function Dashboard() {
             <div style={sx.container}>
 
                 <Paper elevation={3} sx={{ padding: 3 }}>
-                <Grid container sx={sx.headerComponent}>
+                    <Grid container sx={sx.headerComponent}>
                         <Grid item sx={sx.gridItemHeader}>
-                            <Typography sx={{...sx.titleChart, width: '100%'}}>Total Voting</Typography>
+                            <Typography sx={{ ...sx.titleChart, width: '100%' }}>Total Voting</Typography>
                         </Grid>
                     </Grid>
                     <Chart
@@ -138,7 +138,7 @@ function Dashboard() {
                             </Select>
                         </Grid> */}
                     </Grid>
-                    <ChartKelurahan apiResponse={dataKel}/>
+                    <ChartKelurahan apiResponse={dataKel} />
                 </Paper>
             </div>
         </MainLayout>

@@ -186,7 +186,8 @@ export const sxTabelData = {
     tableCellBody: {
         fontWeight: "400",
         fontSize: "13px",
-        padding: "12px"
+        padding: "12px",
+        textAlign: 'center'
     },
     tableHead: {
         marginTop: "10px",

@@ -6,6 +6,7 @@ import axios from "axios";
 import { Box } from "@mui/system";
 import CloseIcon from '@mui/icons-material/Close';
 import exifr from "exifr";
+import Pagination from "../components/Pagination";
 
 const columns = [
     {
@@ -29,12 +30,12 @@ const columns = [
         label: 'User',
     },
     {
-        id: 'gambar',
-        label: 'Gambar',
-    },
-    {
         id: 'jumlah',
         label: 'Jumlah Suara',
+    },
+    {
+        id: 'gambar',
+        label: 'Gambar',
     },
     {
         id: 'action',
@@ -50,17 +51,22 @@ function TabelData() {
     const sx = sxTabelData;
     const [voting, setVoting] = useState([]);
     const [openForm, setOpenForm] = useState(false);
+    const [openGambar, setOpenGambar] = useState(false);
+    const [openEdit, setOpenEdit] = useState(false);
     const [dataKecamatan, setDataKecamatan] = useState([]);
     const [dataKelurahan, setDataKelurahan] = useState([]);
+    const [dataEdit, setDataEdit] = useState([]);
     const [state, setState] = useState({});
     const [dataKec, setdataKec] = useState('');
     const [dataKel, setdataKel] = useState('');
     const [nomorTps, setNomorTps] = useState('');
     const [upload, setUpload] = useState(null);
-    const [openGambar, setOpenGambar] = useState(false);
     const dataPhoto = useRef(null)
     const latitudePhoto = useRef(null)
     const longitudePhoto = useRef(null)
+    const rowsPerPage = useRef(10)
+    const page = useRef(1)
+    const totalData = useRef(0)
 
     useEffect(() => {
         getDataVoting();
@@ -81,8 +87,9 @@ function TabelData() {
     }
 
     const getDataVoting = async () => {
-        const res = await axios.get('http://127.0.0.1:1234/getemployee');
+        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/getemployee');
         setVoting(res.data.Data);
+        totalData.current = res.data.Data.lenght
     }
 
     // const getDataKandidat = async () => {
@@ -91,13 +98,13 @@ function TabelData() {
     // }
 
     const getKecamatan = async () => {
-        const res = await axios.get('http://127.0.0.1:1234/getkecamatan');
+        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/getkecamatan');
         setDataKecamatan(res.data.Data)
     }
 
     const getdataKelurahan = async () => {
         let param = dataKec
-        const res = await axios.get('http://127.0.0.1:1234/getkelurahan?kecamatan=' + param);
+        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/getkelurahan?kecamatan=' + param);
         setDataKelurahan(res.data)
     }
 
@@ -116,6 +123,34 @@ function TabelData() {
         longitudePhoto.current = longitude
         setOpenGambar(true)
     }
+
+    const handleEdit = (data) => {
+        setOpenEdit(true)
+        setDataEdit(data)
+        console.log(data);
+    }
+
+    const editDataVoting = async (e) => {
+
+        let formData1 = new FormData()
+        formData1.append('tps', nomorTps)
+        formData1.append('kecamatan', dataKec)
+        formData1.append('kelurahan', dataKel)
+        formData1.append('nama', 'adi')
+        formData1.append('jumlah_suara', state.jumlah_suara_1)
+        formData1.append('user', 'Udin')
+        formData1.append('gambar', upload)
+
+        const config = {
+            headers: { 'content-type': 'multipart/form-data' }
+        }
+
+        let req = axios
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData1, config)
+        setOpenEdit(false)
+        clearData()
+    }
+
     const addDataVoting = async (e) => {
 
         let formData1 = new FormData()
@@ -213,16 +248,16 @@ function TabelData() {
         }
 
         let req = axios
-        await req.post('http://127.0.0.1:1234/insertemployee', formData1, config)
-        await req.post('http://127.0.0.1:1234/insertemployee', formData2, config)
-        await req.post('http://127.0.0.1:1234/insertemployee', formData3, config)
-        await req.post('http://127.0.0.1:1234/insertemployee', formData4, config)
-        await req.post('http://127.0.0.1:1234/insertemployee', formData5, config)
-        await req.post('http://127.0.0.1:1234/insertemployee', formData6, config)
-        await req.post('http://127.0.0.1:1234/insertemployee', formData7, config)
-        await req.post('http://127.0.0.1:1234/insertemployee', formData8, config)
-        await req.post('http://127.0.0.1:1234/insertemployee', formData9, config)
-        await req.post('http://127.0.0.1:1234/insertemployee', formData10, config)
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData1, config)
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData2, config)
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData3, config)
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData4, config)
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData5, config)
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData6, config)
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData7, config)
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData8, config)
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData9, config)
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData10, config)
 
         await getDataVoting()
     }
@@ -232,7 +267,15 @@ function TabelData() {
         setOpenForm(false);
         clearData()
     }
-
+    const handleChangePage = (newPage) => {
+        page.current = newPage;
+        getDataVoting();
+    };
+    const handleChangePerPage = (e) => {
+        rowsPerPage.current = e.target.value;
+        page.current = 1;
+        getDataVoting();
+    };
 
     return (
         <MainLayout>
@@ -252,7 +295,7 @@ function TabelData() {
                                     return (
                                         <TableCell
                                             key={rows.id}
-                                            sx={rows.id === "action" ? { ...sx.tableCellAction } : sx.tableCelHead}>
+                                            sx={sx.tableCellAction } >
                                             {rows.label}
                                         </TableCell>
                                     );
@@ -270,7 +313,7 @@ function TabelData() {
                                                         key={rows.id}
                                                         sx={sx.tableCellBody}>
                                                         {rows.id === 'kandidat' &&
-                                                            <Typography sx={sx.textCellBlack1}>{values.nama}</Typography>
+                                                            <Typography sx={sx.textCellBlack1}>{values.nama.toUpperCase()}</Typography>
                                                         }
                                                         {rows.id === 'kecamatan' &&
                                                             <Typography sx={sx.textCellBlack1}>{values.Kecamatan}</Typography>
@@ -279,10 +322,11 @@ function TabelData() {
                                                             <Typography sx={sx.textCellBlack1}>{values.kelurahan}</Typography>
                                                         }
                                                         {rows.id === 'user' &&
-                                                            <Typography sx={sx.textCellBlack1}>{values.User}</Typography>
+                                                            <Typography sx={sx.textCellBlack1}>{values.User.toUpperCase()}</Typography>
                                                         }
                                                         {rows.id === 'gambar' &&
                                                             <Button
+                                                                variant="outlined"
                                                                 onClick={() => handleView(values.gambar)}
                                                                 disabled={values.gambar ? false : true}
                                                                 sx={sx.textCellBlack1}>
@@ -296,7 +340,14 @@ function TabelData() {
                                                             <Typography sx={sx.textCellBlack1}>{values.tps}</Typography>
                                                         }
                                                         {rows.id === 'action' &&
-                                                            <Button sx={{ width: '100%', justifyContent: 'center' }} size="small" variant="contained" color="success">Edit</Button>
+                                                            <Button
+                                                                onClick={() => handleEdit(values)}
+                                                                sx={{ width: '100%', justifyContent: 'center' }}
+                                                                size="small"
+                                                                variant="contained"
+                                                                color="success">
+                                                                Edit
+                                                            </Button>
                                                         }
                                                     </TableCell>
                                                 )
@@ -307,7 +358,18 @@ function TabelData() {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <Pagination
+                    data={voting}
+                    count={totalData.current}
+                    page={page.current}
+                    per_page={[10, 20, 30]}
+                    max_page={10}
+                    onChangePage={handleChangePage}
+                    onChangePerPage={handleChangePerPage}
+                />
             </div>
+
+            {/* Dialog View Photo */}
             <Dialog
                 open={openGambar}
                 TransitionComponent={Transition}
@@ -336,6 +398,7 @@ function TabelData() {
                 </DialogContent>
             </Dialog>
 
+            {/* Dialog All Form Input*/}
             <Dialog
                 open={openForm}
                 TransitionComponent={Transition}
@@ -353,6 +416,7 @@ function TabelData() {
                                 label="Nomor TPS"
                                 size="small"
                                 sx={{ width: '100%', marginBottom: 2 }}
+                                // defaultValue={dataEdit}
                                 value={nomorTps}
                                 onChange={(e) => setNomorTps(e.target.value)}
                                 InputLabelProps={{
@@ -692,12 +756,129 @@ function TabelData() {
                             !state.jumlah_suara_1 || !state.jumlah_suara_2 || !state.jumlah_suara_3 ||
                                 !state.jumlah_suara_4 || !state.jumlah_suara_5 || !state.jumlah_suara_6 ||
                                 !state.jumlah_suara_7 || !state.jumlah_suara_8 || !state.jumlah_suara_9 ||
-                                !state.jumlah_suara_10 || !dataKec || !dataKel || !nomorTps
+                                !state.jumlah_suara_10 || !dataKec || !dataKel || !nomorTps || dataPhoto.current === null
                                 ? true : false
                         }
                         color="warning"
                         variant="contained"
                         onClick={submitVoting}
+                        sx={{ width: "100%" }}>
+                        Simpan
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+            {/* Dialog Edit Data*/}
+            <Dialog
+                open={openEdit}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={() => { setOpenEdit(false); clearData() }}
+                PaperProps={{
+                    style: { ...sx.dialogCredit }
+                }}
+            >
+                <DialogTitle sx={sx.textDialogTitle}>{"Form Data Edit"}</DialogTitle>
+                <DialogContent>
+                    <Grid sx={{ marginTop: 2 }}>
+                        <Box sx={{ border: '1px solid #7D8D9E', padding: 3 }}>
+                            <TextField
+                                label="Nomor TPS"
+                                size="small"
+                                sx={{ width: '100%', marginBottom: 2 }}
+                                defaultValue={dataEdit.tps}
+                                value={nomorTps}
+                                onChange={(e) => setNomorTps(e.target.value)}
+                                InputLabelProps={{
+                                    style: {
+                                        fontSize: 12
+                                    }
+                                }}
+                            />
+                            <Typography sx={sx.textCellBlack1}>Kecamatan</Typography>
+                            <Select
+                                onOpen={getKecamatan}
+                                defaultValue={dataEdit.Kecamatan}
+                                value={dataKec}
+                                onChange={(e) => setdataKec(e.target.value)}
+                                size="small"
+                                sx={{ width: '100%', marginBottom: 2 }}>
+                                {dataKecamatan.map((value, index) => (
+                                    <MenuItem key={index} value={value.kecamatan} >{value.kecamatan}</MenuItem>
+                                ))}
+                            </Select>
+                            <Typography sx={sx.textCellBlack1}>Kelurahan</Typography>
+                            <Select
+                                onOpen={getdataKelurahan}
+                                defaultValue={dataEdit.kelurahan}
+                                value={dataKel}
+                                onChange={(e) => setdataKel(e.target.value)}
+                                size="small"
+                                sx={{ width: '100%', marginBottom: 2 }}>
+                                {dataKelurahan.map((value, index) => (
+                                    <MenuItem key={index} value={value.kelurahan}>{value.kelurahan}</MenuItem>
+                                ))}
+                            </Select>
+                            <Typography sx={sx.textCellBlack1}>Kandidat</Typography>
+                            <TextField
+                                defaultValue="adi"
+                                size="small"
+                                disabled={true}
+                                sx={sx.textKandidate}
+                                InputLabelProps={{
+                                    style: {
+                                        fontSize: 12,
+                                        color: 'black'
+                                    }
+                                }}
+                            />
+                            <TextField
+                                label="Jumlah Suara"
+                                size="small"
+                                type="number"
+                                sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
+                                name="jumlah_suara_1"
+                                value={state.jumlah_suara_1 || ''}
+                                onChange={handleChangeValue}
+                                InputLabelProps={{
+                                    style: {
+                                        fontSize: 12
+                                    }
+                                }}
+                            />
+                            <Button
+                                color="success"
+                                variant="contained"
+                                sx={{ width: "100%" }}>
+                                <label
+                                    style={{ width: '100%' }}
+                                    htmlFor="upload-photo">
+                                    Upload C4
+                                </label>
+                                <input
+                                    id="upload-photo"
+                                    type="file"
+                                    style={{ opacity: 0, width: 0 }} onChange={uploadGambar} />
+                            </Button>
+                        </Box>
+                    </Grid>
+                </DialogContent>
+                <DialogActions sx={sx.dialogAction}>
+                    <Button
+                        color="warning"
+                        variant="outlined"
+                        onClick={() => { setOpenEdit(false); clearData() }}
+                        sx={{ width: "100%" }}>
+                        Batal
+                    </Button>
+                    <Button
+                        disabled={
+                            !state.jumlah_suara_1 || !dataKec || !dataKel || !nomorTps || !dataPhoto
+                                ? true : false
+                        }
+                        color="warning"
+                        variant="contained"
+                        onClick={editDataVoting}
                         sx={{ width: "100%" }}>
                         Simpan
                     </Button>

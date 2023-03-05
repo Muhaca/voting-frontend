@@ -85,7 +85,7 @@ export default function Pagination(props) {
                                     );
                                 })}
                             </Select>
-                            <Typography >Showing <span >{data.length}</span> of <span>{count}</span></Typography>
+                            <Typography >Showing <span >{data?.length}</span> of <span>{count}</span></Typography>
                         </Stack>
                     </Grid>
                     <Grid container sx={{ order: { xs: 1, sm: 2 } }}>

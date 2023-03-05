@@ -117,8 +117,8 @@ function TabelData() {
     };
 
     const handleView = async (data) => {
-        let { latitude, longitude } = await exifr.gps(data)
         dataPhoto.current = data
+        let { latitude, longitude } = await exifr.gps(data)
         latitudePhoto.current = latitude
         longitudePhoto.current = longitude
         setOpenGambar(true)
@@ -295,7 +295,7 @@ function TabelData() {
                                     return (
                                         <TableCell
                                             key={rows.id}
-                                            sx={sx.tableCellAction } >
+                                            sx={sx.tableCellAction} >
                                             {rows.label}
                                         </TableCell>
                                     );
@@ -360,7 +360,7 @@ function TabelData() {
                 </TableContainer>
                 <Pagination
                     data={voting}
-                    count={totalData.current}
+                    count={totalData.current || 1}
                     page={page.current}
                     per_page={[10, 20, 30]}
                     max_page={10}
@@ -756,7 +756,7 @@ function TabelData() {
                             !state.jumlah_suara_1 || !state.jumlah_suara_2 || !state.jumlah_suara_3 ||
                                 !state.jumlah_suara_4 || !state.jumlah_suara_5 || !state.jumlah_suara_6 ||
                                 !state.jumlah_suara_7 || !state.jumlah_suara_8 || !state.jumlah_suara_9 ||
-                                !state.jumlah_suara_10 || !dataKec || !dataKel || !nomorTps || dataPhoto.current === null
+                                !state.jumlah_suara_10 || !dataKec || !dataKel || !nomorTps 
                                 ? true : false
                         }
                         color="warning"

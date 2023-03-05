@@ -3,7 +3,7 @@ import Chart from 'react-google-charts';
 
 const ChartKecamatan = ({ apiResponse }) => {
     const data = apiResponse.reduce((acc, curr) => {
-        const kelurahan = curr.kecamatan;
+        const kecamatan = curr.kecamatan;
         const suara = curr.suara.reduce((obj, item) => {
             const name = Object.keys(item)[1];
             const value = Object.values(item)[1];
@@ -11,7 +11,7 @@ const ChartKecamatan = ({ apiResponse }) => {
             return obj;
         }, {});
         const kecamatanData = [
-            kelurahan,
+            kecamatan,
             suara.total_suara_1 || 0,
             suara.total_suara_2 || 0,
             suara.total_suara_3 || 0,
@@ -38,7 +38,6 @@ const ChartKecamatan = ({ apiResponse }) => {
         "Sumanto",
         "Ridho"
     ]]);
-
     return (
         <Chart
             width={'100%'}

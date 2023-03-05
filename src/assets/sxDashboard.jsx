@@ -54,5 +54,10 @@ export const sxDashboard = {
         fontSize: "18px",
         fontWeight: "700",
         padding: "24px 0px 24px 0px"
-    }
+    },
+    label: {
+        color: "#98A2B3",
+        fontSize: "12px",
+        fontWeight: "400"
+    },
 }

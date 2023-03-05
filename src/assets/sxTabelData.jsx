@@ -251,4 +251,11 @@ export const sxTabelData = {
         alignContent: "center",
         borderRadius: "6px"
     },
+    imgUpload: {
+        marginTop: 10,
+        width: "100%",
+        height: "150px",
+        alignContent: "center",
+        borderRadius: "6px"
+    },
 }

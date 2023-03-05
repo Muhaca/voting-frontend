@@ -23,8 +23,10 @@ function Dashboard() {
     const [totalData, seTotalData] = useState([]);
     const [dataKecamatan, setDataKecamatan] = useState([]);
     const [filterKec, setFilterKec] = useState('');
+    const [filterKel, setFilterKel] = useState('');
     const dataFetchedRef = useRef(false);
     const kecamatan = useRef('');
+    const kelurahan = useRef('');
 
 
     useEffect(() => {
@@ -37,28 +39,42 @@ function Dashboard() {
 
     const getDataVoting = async () => {
         const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/getemployee');
-        setVoting(res.data.Data);
+        setVoting(res.data.data);
     }
 
     const getData = async () => {
-        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/gettotaldata');
+        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/gettotaldata?kecamatan=' + kecamatan.current);
         seTotalData(res.data);
+    }
+
+    const getDataKecamatan = async (e) => {
+        setFilterKec(e.target.value);
+        kecamatan.current = e.target.value
+        getData()
     }
 
     const getKecamatan = async () => {
         const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/getkecamatan');
-        setDataKecamatan(res.data.Data)
+        if (res.data === null) {
+            return
+        } else {
+            setDataKecamatan(res.data.Data)
+        }
     }
 
     const getDataKelurahan = async (e) => {
-        setFilterKec(e.target.value);
-        kecamatan.current = e.target.value
+        setFilterKel(e.target.value);
+        kelurahan.current = e.target.value
         getDataKel()
     }
 
     const getDataKel = async () => {
-        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/gettotaldatakel?kecamatan=' + kecamatan.current );
-        setDataKel(res.data);
+        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/gettotaldatakel?kecamatan=' + kelurahan.current);
+        if (res.data === null) {
+            return
+        } else {
+            setDataKel(res.data);
+        }
     }
 
     const loadDataPie = () => {
@@ -101,6 +117,31 @@ function Dashboard() {
                         <Grid item sx={sx.gridItemHeader}>
                             <Typography sx={sx.titleChart}>Per Kecamatan</Typography>
                         </Grid>
+                        <Grid item sx={sx.gridItemHeader}>
+                            <FormControl fullWidth>
+                                <InputLabel sx={sx.label} >Pilih Kelurahan</InputLabel>
+                                <Select
+                                    onOpen={getKecamatan}
+                                    value={filterKec}
+                                    onChange={getDataKecamatan}
+                                    size="small"
+                                    sx={{ width: '100%', marginBottom: 2 }}>
+                                    <MenuItem
+                                        value=""
+                                        sx={{ fontSize: "12px", fontWeight: "400" }}>
+                                        <em>None</em>
+                                    </MenuItem>
+                                    {dataKecamatan.map((value, index) => (
+                                        <MenuItem
+                                            key={index}
+                                            value={value.kecamatan}
+                                            sx={{ fontSize: "12px", fontWeight: "400" }}>
+                                            {value.kecamatan}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Grid>
                     </Grid>
                     <ChartKecamatan apiResponse={totalData} />
                 </Paper>
@@ -114,7 +155,7 @@ function Dashboard() {
                                 <InputLabel sx={sx.label} >Pilih Kelurahan</InputLabel>
                                 <Select
                                     onOpen={getKecamatan}
-                                    value={filterKec}
+                                    value={filterKel}
                                     onChange={getDataKelurahan}
                                     size="small"
                                     sx={{ width: '100%', marginBottom: 2 }}>

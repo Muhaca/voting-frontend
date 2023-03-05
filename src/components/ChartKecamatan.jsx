@@ -4,12 +4,23 @@ import Chart from 'react-google-charts';
 const ChartKecamatan = ({ apiResponse }) => {
     const data = apiResponse.reduce((acc, curr) => {
         const kecamatan = curr.kecamatan;
+
+        //Create Row Suaara
         const suara = curr.suara.reduce((obj, item) => {
             const name = Object.keys(item)[1];
             const value = Object.values(item)[1];
             obj[name] = value;
             return obj;
         }, {});
+
+        // const nama = curr.suara.reduce((obj, item) => {
+        //     const name = Object.keys(item)[0];
+        //     const value = Object.values(item)[0];
+        //     obj[name] = value;
+        //     return obj;
+        // }, {});
+
+
         const kecamatanData = [
             kecamatan,
             suara.total_suara_1 || 0,

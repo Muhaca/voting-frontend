@@ -34,6 +34,10 @@ const columns = [
         label: 'Jumlah Suara',
     },
     {
+        id: 'date',
+        label: 'TanggaL Upload',
+    },
+    {
         id: 'gambar',
         label: 'Gambar',
     },
@@ -87,9 +91,10 @@ function TabelData() {
     }
 
     const getDataVoting = async () => {
-        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/getemployee');
-        setVoting(res.data.Data);
-        totalData.current = res.data.Data.lenght
+        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/getemployee?perPage=' + rowsPerPage.current);
+        setVoting(res.data.data);
+        totalData.current = res.data.data.lenght
+
     }
 
     // const getDataKandidat = async () => {
@@ -338,6 +343,9 @@ function TabelData() {
                                                         }
                                                         {rows.id === 'tps' &&
                                                             <Typography sx={sx.textCellBlack1}>{values.tps}</Typography>
+                                                        }
+                                                        {rows.id === 'date' &&
+                                                            <Typography sx={sx.textCellBlack1}>{values.created_at}</Typography>
                                                         }
                                                         {rows.id === 'action' &&
                                                             <Button
@@ -733,13 +741,14 @@ function TabelData() {
                                 <label
                                     style={{ width: '100%' }}
                                     htmlFor="upload-photo">
-                                    Upload C4
+                                    Upload C1
                                 </label>
                                 <input
                                     id="upload-photo"
                                     type="file"
                                     style={{ opacity: 0, width: 0 }} onChange={uploadGambar} />
                             </Button>
+                            <img src={upload} alt="" style={sx.imgUpload} />
                         </Box>
                     </Grid>
                 </DialogContent>
@@ -756,7 +765,7 @@ function TabelData() {
                             !state.jumlah_suara_1 || !state.jumlah_suara_2 || !state.jumlah_suara_3 ||
                                 !state.jumlah_suara_4 || !state.jumlah_suara_5 || !state.jumlah_suara_6 ||
                                 !state.jumlah_suara_7 || !state.jumlah_suara_8 || !state.jumlah_suara_9 ||
-                                !state.jumlah_suara_10 || !dataKec || !dataKel || !nomorTps 
+                                !state.jumlah_suara_10 || !dataKec || !dataKel || !nomorTps
                                 ? true : false
                         }
                         color="warning"
@@ -846,6 +855,7 @@ function TabelData() {
                                     }
                                 }}
                             />
+
                             <Button
                                 color="success"
                                 variant="contained"

@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start-dev-voting": "env-cmd -e development-voting react-scripts start",
-    "build-dev-voting": "env-cmd -e development-voting react-scripts build",
+    "build-dev-voting": "set \"GENERATE_SOURCEMAP=false\" && env-cmd -e development-voting react-scripts build",
     "start-staging-voting": "env-cmd -e staging-voting react-scripts start",
     "build-staging-voting": "set \"GENERATE_SOURCEMAP=false\" && env-cmd -e staging-voting react-scripts build",
     "start-production-voting": "env-cmd -e staging-voting react-scripts start",

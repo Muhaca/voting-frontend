@@ -33,7 +33,7 @@ export default function MainAppBar() {
           <Divider orientation="vertical" flexItem sx={{ marginLeft: 1, margin: "20px 4px 20px 12px", color: '#98A2B3', border: "1px solid #98A2B3" }} />
           <ListItem sx={{ width: 'auto', cursor: 'pointer' }} onClick={(e) => setAnchorEl(e.currentTarget)} >
             <ListItemAvatar>
-              <Avatar alt="Profile Picture" src="/images/avatar.jpeg" />
+//               <Avatar alt="Profile Picture" src="/images/avatar.jpeg" />
             </ListItemAvatar>
           </ListItem>
 

@@ -1,12 +1,15 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, IconButton, MenuItem, Select, Slide, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import { sxTabelData } from "../assets/sxTabelData";
+import { sxTabelData } from "../assets/styles/sxTabelData";
 import MainLayout from "../layouts/MainLayouts";
 import axios from "axios";
 import { Box } from "@mui/system";
 import CloseIcon from '@mui/icons-material/Close';
 import exifr from "exifr";
 import Pagination from "../components/Pagination";
+import { GetKecamatanAPIRequest } from "../integrations/ApiGetKecamatan";
+import { GetKelurahanAPIRequest } from "../integrations/ApiGetKelurahan";
+import { GetResultVotingAPIRequest } from "../integrations/ApiGetResultVoting";
 
 const columns = [
     {
@@ -65,213 +68,222 @@ function TabelData() {
     const [dataKel, setdataKel] = useState('');
     const [nomorTps, setNomorTps] = useState('');
     const [upload, setUpload] = useState(null);
-    const dataPhoto = useRef(null)
-    const latitudePhoto = useRef(null)
-    const longitudePhoto = useRef(null)
-    const rowsPerPage = useRef(10)
-    const page = useRef(1)
-    const totalData = useRef(0)
+    const dataPhoto = useRef(null);
+    const latitudePhoto = useRef(null);
+    const longitudePhoto = useRef(null);
+    const rowsPerPage = useRef(10);
+    const page = useRef(1);
+    const totalData = useRef(0);
 
     useEffect(() => {
         getDataVoting();
     }, []);
 
     const handleChangeValue = (e) => {
-        const jumlahSuara = parseFloat(e.target.value)
+        const jumlahSuara = parseFloat(e.target.value);
         setState({
             ...state, [e.target.name]: jumlahSuara
-        })
-    }
+        });
+    };
 
     const clearData = () => {
-        setState({})
-        setdataKec('')
-        setdataKel('')
-        setNomorTps('')
-    }
+        setState({});
+        setdataKec('');
+        setdataKel('');
+        setNomorTps('');
+    };
 
     const getDataVoting = async () => {
-        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/getemployee?perPage=' + rowsPerPage.current);
-        setVoting(res.data.data);
-        totalData.current = res.data.data.lenght
+        let req = new GetResultVotingAPIRequest();
+        req.setPagination(true);
+        req.setPerPage(rowsPerPage.current);
+        req.setPage(page.current);
 
-    }
+        let res = await req.fetch();
+        setVoting(res.data.data);
+        if (res.data.data) {
+            totalData.current = res.data.data.lenght;
+        }
+    };
 
     // const getDataKandidat = async () => {
     //     const res = await axios.get('http://127.0.0.1:1234/getkandidat');
     //     setGetKandidat(res.data.Data);
     // }
 
+
     const getKecamatan = async () => {
-        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/getkecamatan');
-        setDataKecamatan(res.data.Data)
-    }
+        let req = new GetKecamatanAPIRequest();
+        let res = await req.fetch();
+        setDataKecamatan(res.data.Data);
+    };
 
     const getdataKelurahan = async () => {
-        let param = dataKec
-        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/getkelurahan?kecamatan=' + param);
-        setDataKelurahan(res.data)
-    }
+        let req = new GetKelurahanAPIRequest();
+        req.setKecamatan(dataKec);
+
+        let res = await req.fetch();
+        setDataKelurahan(res.data);
+    };
 
     const uploadGambar = e => {
-        const reader = new FileReader()
-        reader.readAsDataURL(e.target.files[0])
+        const reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
         reader.onload = () => {
-            setUpload(reader.result)
-        }
+            setUpload(reader.result);
+        };
     };
 
     const handleView = async (data) => {
-        dataPhoto.current = data
-        let { latitude, longitude } = await exifr.gps(data)
-        latitudePhoto.current = latitude
-        longitudePhoto.current = longitude
-        setOpenGambar(true)
-    }
+        dataPhoto.current = data;
+        let { latitude, longitude } = await exifr.gps(data);
+        latitudePhoto.current = latitude;
+        longitudePhoto.current = longitude;
+        setOpenGambar(true);
+    };
 
     const handleEdit = (data) => {
-        setOpenEdit(true)
-        setDataEdit(data)
-        console.log(data);
-    }
+        setOpenEdit(true);
+        setDataEdit(data);
+    };
 
     const editDataVoting = async (e) => {
 
-        let formData1 = new FormData()
-        formData1.append('tps', nomorTps)
-        formData1.append('kecamatan', dataKec)
-        formData1.append('kelurahan', dataKel)
-        formData1.append('nama', 'adi')
-        formData1.append('jumlah_suara', state.jumlah_suara_1)
-        formData1.append('user', 'Udin')
-        formData1.append('gambar', upload)
+        let formData1 = new FormData();
+        formData1.append('tps', nomorTps);
+        formData1.append('kecamatan', dataKec);
+        formData1.append('kelurahan', dataKel);
+        formData1.append('nama', 'adi');
+        formData1.append('jumlah_suara', state.jumlah_suara_1);
+        formData1.append('user', 'Udin');
+        formData1.append('gambar', upload);
 
         const config = {
             headers: { 'content-type': 'multipart/form-data' }
-        }
+        };
 
-        let req = axios
-        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData1, config)
-        setOpenEdit(false)
-        clearData()
-    }
+        let req = axios;
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData1, config);
+        setOpenEdit(false);
+        clearData();
+    };
 
     const addDataVoting = async (e) => {
 
-        let formData1 = new FormData()
-        formData1.append('tps', nomorTps)
-        formData1.append('kecamatan', dataKec)
-        formData1.append('kelurahan', dataKel)
-        formData1.append('nama', 'adi')
-        formData1.append('jumlah_suara', state.jumlah_suara_1)
-        formData1.append('user', 'Udin')
-        formData1.append('gambar', upload)
+        let formData1 = new FormData();
+        formData1.append('tps', nomorTps);
+        formData1.append('kecamatan', dataKec);
+        formData1.append('kelurahan', dataKel);
+        formData1.append('nama', 'adi');
+        formData1.append('jumlah_suara', state.jumlah_suara_1);
+        formData1.append('user', 'Udin');
+        formData1.append('gambar', upload);
 
-        let formData2 = new FormData()
-        formData2.append('tps', nomorTps)
-        formData2.append('kecamatan', dataKec)
-        formData2.append('kelurahan', dataKel)
-        formData2.append('nama', "jenda")
-        formData2.append('jumlah_suara', state.jumlah_suara_2)
-        formData2.append('user', 'Udin')
-        formData2.append('gambar', upload)
+        let formData2 = new FormData();
+        formData2.append('tps', nomorTps);
+        formData2.append('kecamatan', dataKec);
+        formData2.append('kelurahan', dataKel);
+        formData2.append('nama', "jenda");
+        formData2.append('jumlah_suara', state.jumlah_suara_2);
+        formData2.append('user', 'Udin');
+        formData2.append('gambar', upload);
 
-        let formData3 = new FormData()
-        formData3.append('tps', nomorTps)
-        formData3.append('kecamatan', dataKec)
-        formData3.append('kelurahan', dataKel)
-        formData3.append('nama', "luna")
-        formData3.append('jumlah_suara', state.jumlah_suara_3)
-        formData3.append('user', 'Udin')
-        formData3.append('gambar', upload)
+        let formData3 = new FormData();
+        formData3.append('tps', nomorTps);
+        formData3.append('kecamatan', dataKec);
+        formData3.append('kelurahan', dataKel);
+        formData3.append('nama', "luna");
+        formData3.append('jumlah_suara', state.jumlah_suara_3);
+        formData3.append('user', 'Udin');
+        formData3.append('gambar', upload);
 
-        let formData4 = new FormData()
-        formData4.append('tps', nomorTps)
-        formData4.append('kecamatan', dataKec)
-        formData4.append('kelurahan', dataKel)
-        formData4.append('nama', 'bambang')
-        formData4.append('jumlah_suara', state.jumlah_suara_4)
-        formData4.append('user', 'Udin')
-        formData4.append('gambar', upload)
+        let formData4 = new FormData();
+        formData4.append('tps', nomorTps);
+        formData4.append('kecamatan', dataKec);
+        formData4.append('kelurahan', dataKel);
+        formData4.append('nama', 'bambang');
+        formData4.append('jumlah_suara', state.jumlah_suara_4);
+        formData4.append('user', 'Udin');
+        formData4.append('gambar', upload);
 
-        let formData5 = new FormData()
-        formData5.append('tps', nomorTps)
-        formData5.append('kecamatan', dataKec)
-        formData5.append('kelurahan', dataKel)
-        formData5.append('nama', "asep kurniawan")
-        formData5.append('jumlah_suara', state.jumlah_suara_5)
-        formData5.append('user', 'Udin')
-        formData5.append('gambar', upload)
+        let formData5 = new FormData();
+        formData5.append('tps', nomorTps);
+        formData5.append('kecamatan', dataKec);
+        formData5.append('kelurahan', dataKel);
+        formData5.append('nama', "asep kurniawan");
+        formData5.append('jumlah_suara', state.jumlah_suara_5);
+        formData5.append('user', 'Udin');
+        formData5.append('gambar', upload);
 
-        let formData6 = new FormData()
-        formData6.append('tps', nomorTps)
-        formData6.append('kecamatan', dataKec)
-        formData6.append('kelurahan', dataKel)
-        formData6.append('nama', "sitri badria")
-        formData6.append('jumlah_suara', state.jumlah_suara_6)
-        formData6.append('user', 'Udin')
-        formData6.append('gambar', upload)
+        let formData6 = new FormData();
+        formData6.append('tps', nomorTps);
+        formData6.append('kecamatan', dataKec);
+        formData6.append('kelurahan', dataKel);
+        formData6.append('nama', "sitri badria");
+        formData6.append('jumlah_suara', state.jumlah_suara_6);
+        formData6.append('user', 'Udin');
+        formData6.append('gambar', upload);
 
-        let formData7 = new FormData()
-        formData7.append('tps', nomorTps)
-        formData7.append('kecamatan', dataKec)
-        formData7.append('kelurahan', dataKel)
-        formData7.append('nama', "rieke diah pitaloka")
-        formData7.append('jumlah_suara', state.jumlah_suara_7)
-        formData7.append('user', 'Udin')
-        formData7.append('gambar', upload)
+        let formData7 = new FormData();
+        formData7.append('tps', nomorTps);
+        formData7.append('kecamatan', dataKec);
+        formData7.append('kelurahan', dataKel);
+        formData7.append('nama', "rieke diah pitaloka");
+        formData7.append('jumlah_suara', state.jumlah_suara_7);
+        formData7.append('user', 'Udin');
+        formData7.append('gambar', upload);
 
-        let formData8 = new FormData()
-        formData8.append('tps', nomorTps)
-        formData8.append('kecamatan', dataKec)
-        formData8.append('kelurahan', dataKel)
-        formData8.append('nama', "budi")
-        formData8.append('jumlah_suara', state.jumlah_suara_8)
-        formData8.append('user', 'Udin')
-        formData8.append('gambar', upload)
+        let formData8 = new FormData();
+        formData8.append('tps', nomorTps);
+        formData8.append('kecamatan', dataKec);
+        formData8.append('kelurahan', dataKel);
+        formData8.append('nama', "budi");
+        formData8.append('jumlah_suara', state.jumlah_suara_8);
+        formData8.append('user', 'Udin');
+        formData8.append('gambar', upload);
 
-        let formData9 = new FormData()
-        formData9.append('tps', nomorTps)
-        formData9.append('kecamatan', dataKec)
-        formData9.append('kelurahan', dataKel)
-        formData9.append('nama', 'sumanto')
-        formData9.append('jumlah_suara', state.jumlah_suara_9)
-        formData9.append('user', 'Udin')
-        formData9.append('gambar', upload)
+        let formData9 = new FormData();
+        formData9.append('tps', nomorTps);
+        formData9.append('kecamatan', dataKec);
+        formData9.append('kelurahan', dataKel);
+        formData9.append('nama', 'sumanto');
+        formData9.append('jumlah_suara', state.jumlah_suara_9);
+        formData9.append('user', 'Udin');
+        formData9.append('gambar', upload);
 
-        let formData10 = new FormData()
-        formData10.append('tps', nomorTps)
-        formData10.append('kecamatan', dataKec)
-        formData10.append('kelurahan', dataKel)
-        formData10.append('nama', "ridho")
-        formData10.append('jumlah_suara', state.jumlah_suara_10)
-        formData10.append('user', 'Udin')
-        formData10.append('gambar', upload)
+        let formData10 = new FormData();
+        formData10.append('tps', nomorTps);
+        formData10.append('kecamatan', dataKec);
+        formData10.append('kelurahan', dataKel);
+        formData10.append('nama', "ridho");
+        formData10.append('jumlah_suara', state.jumlah_suara_10);
+        formData10.append('user', 'Udin');
+        formData10.append('gambar', upload);
 
         const config = {
             headers: { 'content-type': 'multipart/form-data' }
-        }
+        };
 
-        let req = axios
-        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData1, config)
-        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData2, config)
-        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData3, config)
-        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData4, config)
-        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData5, config)
-        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData6, config)
-        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData7, config)
-        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData8, config)
-        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData9, config)
-        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData10, config)
+        let req = axios;
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData1, config);
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData2, config);
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData3, config);
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData4, config);
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData5, config);
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData6, config);
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData7, config);
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData8, config);
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData9, config);
+        await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData10, config);
 
-        await getDataVoting()
-    }
+        await getDataVoting();
+    };
 
     const submitVoting = () => {
         addDataVoting();
         setOpenForm(false);
-        clearData()
-    }
+        clearData();
+    };
     const handleChangePage = (newPage) => {
         page.current = newPage;
         getDataVoting();
@@ -358,7 +370,7 @@ function TabelData() {
                                                             </Button>
                                                         }
                                                     </TableCell>
-                                                )
+                                                );
                                             })}
                                         </TableRow>
                                     );
@@ -411,7 +423,7 @@ function TabelData() {
                 open={openForm}
                 TransitionComponent={Transition}
                 keepMounted
-                onClose={() => { setOpenForm(false); clearData() }}
+                onClose={() => { setOpenForm(false); clearData(); }}
                 PaperProps={{
                     style: { ...sx.dialogCredit }
                 }}
@@ -756,7 +768,7 @@ function TabelData() {
                     <Button
                         color="warning"
                         variant="outlined"
-                        onClick={() => { setOpenForm(false); clearData() }}
+                        onClick={() => { setOpenForm(false); clearData(); }}
                         sx={{ width: "100%" }}>
                         Batal
                     </Button>
@@ -782,7 +794,7 @@ function TabelData() {
                 open={openEdit}
                 TransitionComponent={Transition}
                 keepMounted
-                onClose={() => { setOpenEdit(false); clearData() }}
+                onClose={() => { setOpenEdit(false); clearData(); }}
                 PaperProps={{
                     style: { ...sx.dialogCredit }
                 }}
@@ -877,7 +889,7 @@ function TabelData() {
                     <Button
                         color="warning"
                         variant="outlined"
-                        onClick={() => { setOpenEdit(false); clearData() }}
+                        onClick={() => { setOpenEdit(false); clearData(); }}
                         sx={{ width: "100%" }}>
                         Batal
                     </Button>

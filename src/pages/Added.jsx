@@ -1,6 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Slide, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
+import { AddKandidatAPIRequest } from "../integrations/ApiAddKandidat";
 import MainLayout from "../layouts/MainLayouts";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -71,12 +72,23 @@ const sx = {
         gap: 2,
         padding: 3
     },
-}
+};
 
 function Added() {
 
     const [openAddUser, setOpenAddUser] = useState(false);
     const [openAddKandidat, setOpenAddKandidat] = useState(false);
+    const [nama, setNama] = useState('');
+    const [userId, setUserId] = useState('');
+
+    const AddKandidat = async () => {
+        let req = new AddKandidatAPIRequest();
+        req.setNama(nama);
+        req.setUserId(parseFloat(userId));
+
+        await req.fetch();
+        setOpenAddKandidat(false);
+    };
 
     return (
         <MainLayout>
@@ -207,8 +219,8 @@ function Added() {
                                     label="Nama Lengkap"
                                     size="small"
                                     sx={{ width: '100%', marginBottom: 2 }}
-                                    // value={nomorTps}
-                                    // onChange={(e) => setNomorTps(e.target.value)}
+                                    value={nama}
+                                    onChange={(e) => setNama(e.target.value)}
                                     InputLabelProps={{
                                         style: {
                                             fontSize: 12
@@ -216,39 +228,12 @@ function Added() {
                                     }}
                                 />
                                 <TextField
-                                    label="Email"
+                                    label="User ID"
                                     size="small"
+                                    type="number"
                                     sx={{ width: '100%', marginBottom: 2 }}
-                                    // value={nomorTps}
-                                    // onChange={(e) => setNomorTps(e.target.value)}
-                                    InputLabelProps={{
-                                        style: {
-                                            fontSize: 12
-                                        }
-                                    }}
-                                />
-                                <TextField
-                                    label="Password"
-                                    size="small"
-                                    type="password"
-                                    sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
-                                    name="jumlah_suara_1"
-                                    // value={state.jumlah_suara_1 || ''}
-                                    // onChange={handleChangeValue}
-                                    InputLabelProps={{
-                                        style: {
-                                            fontSize: 12
-                                        }
-                                    }}
-                                />
-                                <TextField
-                                    label="Konfirmasi Password"
-                                    size="small"
-                                    type="password"
-                                    sx={{ width: '100%', marginBottom: 2, fontSize: 12 }}
-                                    name="jumlah_suara_1"
-                                    // value={state.jumlah_suara_1 || ''}
-                                    // onChange={handleChangeValue}
+                                    value={userId}
+                                    onChange={(e) => setUserId(e.target.value)}
                                     InputLabelProps={{
                                         style: {
                                             fontSize: 12
@@ -273,7 +258,7 @@ function Added() {
                             // }
                             color="warning"
                             variant="contained"
-                            // onClick={editDataVoting}
+                            onClick={AddKandidat}
                             sx={{ width: "100%" }}>
                             Simpan
                         </Button>
@@ -281,6 +266,6 @@ function Added() {
                 </Dialog>
             </div>
         </MainLayout>
-    )
+    );
 }
-export default Added
+export default Added;

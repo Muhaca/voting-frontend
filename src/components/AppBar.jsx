@@ -15,7 +15,7 @@ const sx = {
 
 export default function MainAppBar() {
 
-  const naviate = useNavigate()
+  const naviate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
 
   return (
@@ -25,15 +25,15 @@ export default function MainAppBar() {
           color: 'black'
         }}>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>DataAktual.com</Typography>
-          <Grid sx={{display: 'flex', gap: 2}}>
-            <Button variant="contained" color="success" onClick={() => naviate('/')}>Dashboard DPR RI</Button>
+          <Grid sx={{ display: 'flex', gap: 2 }}>
+            <Button variant="contained" color="success" onClick={() => naviate('/dashboard')}>Dashboard DPR RI</Button>
             <Button variant="contained" color="warning" onClick={() => naviate('/data')}>Input DATA DPR RI</Button>
             <Button variant="contained" color="inherit" onClick={() => naviate('/add')}>ADD USER</Button>
           </Grid>
           <Divider orientation="vertical" flexItem sx={{ marginLeft: 1, margin: "20px 4px 20px 12px", color: '#98A2B3', border: "1px solid #98A2B3" }} />
           <ListItem sx={{ width: 'auto', cursor: 'pointer' }} onClick={(e) => setAnchorEl(e.currentTarget)} >
             <ListItemAvatar>
-//               <Avatar alt="Profile Picture" src="/images/avatar.jpeg" />
+              <Avatar alt="Profile Picture" src="/images/avatar.jpeg" />
             </ListItemAvatar>
           </ListItem>
 
@@ -49,7 +49,7 @@ export default function MainAppBar() {
             elevation={4}
           >
             <List style={{ width: 300 }}>
-              <ListItemButton onClick={() => naviate('/login')} sx={{ color: "red" }}>
+              <ListItemButton onClick={() => naviate('/')} sx={{ color: "red" }}>
                 <ListItemAvatar>
                   <ExitToAppIcon sx={{ fontSize: 24, ml: 1, mt: "6px" }} />
                 </ListItemAvatar>

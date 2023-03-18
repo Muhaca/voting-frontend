@@ -1,11 +1,14 @@
 import { Typography, Paper, Grid, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
-import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import Chart from "react-google-charts";
-import { sxDashboard } from "../assets/sxDashboard";
+import { sxDashboard } from "../assets/styles/sxDashboard";
 import MainLayout from "../layouts/MainLayouts";
 import ChartKecamatan from "../components/ChartKecamatan";
 import ChartKelurahan from "../components/ChartKelurahan";
+import { GetResultVotingAPIRequest } from "../integrations/ApiGetResultVoting";
+import { GetDataKecamatanAPIRequest } from "../integrations/ApiGetDataKecamatan";
+import { GetKecamatanAPIRequest } from "../integrations/ApiGetKecamatan";
+import { GetDataKelurahanAPIRequest } from "../integrations/ApiGetDataKelurahan";
 
 const optionsPie = {
     legend: {
@@ -33,65 +36,85 @@ function Dashboard() {
         if (dataFetchedRef.current) return;
         dataFetchedRef.current = true;
         getDataVoting();
-        getData()
-        getDataKel()
+        getData();
+        getDataKel();
     });
 
     const getDataVoting = async () => {
-        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/getemployee');
+        let req = new GetResultVotingAPIRequest();
+        let res = await req.fetch();
         setVoting(res.data.data);
-    }
+    };
 
     const getData = async () => {
-        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/gettotaldata?kecamatan=' + kecamatan.current);
+        let req = new GetDataKecamatanAPIRequest();
+        req.setKecamatan(kecamatan.current);
+
+        let res = await req.fetch();
         seTotalData(res.data);
-    }
+    };
 
     const getDataKecamatan = async (e) => {
         setFilterKec(e.target.value);
-        kecamatan.current = e.target.value
-        getData()
-    }
+        kecamatan.current = e.target.value;
+        getData();
+    };
 
     const getKecamatan = async () => {
-        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/getkecamatan');
+        let req = new GetKecamatanAPIRequest();
+        let res = await req.fetch();
         if (res.data === null) {
-            return
+            return;
         } else {
-            setDataKecamatan(res.data.Data)
+            setDataKecamatan(res.data.Data);
         }
-    }
+    };
 
     const getDataKelurahan = async (e) => {
         setFilterKel(e.target.value);
-        kelurahan.current = e.target.value
-        getDataKel()
-    }
+        kelurahan.current = e.target.value;
+        getDataKel();
+    };
 
     const getDataKel = async () => {
-        const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/gettotaldatakel?kecamatan=' + kelurahan.current);
+        let req = new GetDataKelurahanAPIRequest();
+        req.setKelurahan(kelurahan.current);
+        let res = await req.fetch();
         if (res.data === null) {
-            return
+            return;
         } else {
             setDataKel(res.data);
         }
-    }
+    };
+
+    // const getDataKel = async () => {
+    //     const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/gettotaldatakel?kecamatan=' + kelurahan.current);
+    //     if (res.data === null) {
+    //         return;
+    //     } else {
+    //         setDataKel(res.data);
+    //     }
+    // };
 
     const loadDataPie = () => {
-        const resPie = Array.from(voting.reduce(
-            (m, { nama, JumlahSuara }) => m.set(nama, (m.get(nama) || 0) + JumlahSuara), new Map()
-        ), ([nama, JumlahSuara]) => ({ nama, JumlahSuara }));
+        if (voting === null) {
+            return undefined;
+        } else {
+            const resPie = Array.from(voting.reduce(
+                (m, { nama, JumlahSuara }) => m.set(nama, (m.get(nama) || 0) + JumlahSuara), new Map()
+            ), ([nama, JumlahSuara]) => ({ nama, JumlahSuara }));
 
-        let pie = [
-            ["Kandidat", "Total"],
-            ...resPie?.map(p => {
-                return (
-                    [p.nama, p.JumlahSuara]
-                )
-            })
-        ]
-        return pie;
-    }
+            let pie = [
+                ["Kandidat", "Total"],
+                ...resPie?.map(p => {
+                    return (
+                        [p.nama, p.JumlahSuara]
+                    );
+                })
+            ];
+            return pie;
+        }
+    };
 
     return (
         <MainLayout>
@@ -119,7 +142,7 @@ function Dashboard() {
                         </Grid>
                         <Grid item sx={sx.gridItemHeader}>
                             <FormControl fullWidth>
-                                <InputLabel sx={sx.label} >Pilih Kelurahan</InputLabel>
+                                <InputLabel sx={sx.label} >Pilih Kecamatan</InputLabel>
                                 <Select
                                     onOpen={getKecamatan}
                                     value={filterKec}
@@ -129,7 +152,7 @@ function Dashboard() {
                                     <MenuItem
                                         value=""
                                         sx={{ fontSize: "12px", fontWeight: "400" }}>
-                                        <em>None</em>
+                                        <em>Semua Kecamatan</em>
                                     </MenuItem>
                                     {dataKecamatan.map((value, index) => (
                                         <MenuItem
@@ -162,7 +185,7 @@ function Dashboard() {
                                     <MenuItem
                                         value=""
                                         sx={{ fontSize: "12px", fontWeight: "400" }}>
-                                        <em>None</em>
+                                        <em>Semua Kelurahan</em>
                                     </MenuItem>
                                     {dataKecamatan.map((value, index) => (
                                         <MenuItem

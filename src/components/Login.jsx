@@ -28,10 +28,8 @@ export default function Login() {
             return
         }
         else if (username.current.value === user_1 && password.current.value === pass) {
-            naviate('/')
+            naviate('/dashboard')
         }
-
-        console.log(error);
     }
 
     return (

@@ -106,12 +106,6 @@ function TabelData() {
         }
     };
 
-    // const getDataKandidat = async () => {
-    //     const res = await axios.get('http://127.0.0.1:1234/getkandidat');
-    //     setGetKandidat(res.data.Data);
-    // }
-
-
     const getKecamatan = async () => {
         let req = new GetKecamatanAPIRequest();
         let res = await req.fetch();
@@ -277,6 +271,7 @@ function TabelData() {
         await req.post(process.env.REACT_APP_HOST_VOT + '/insertemployee', formData10, config);
 
         await getDataVoting();
+        console.log(formData1, formData2, formData3, formData4, formData5, formData6, formData7, formData8, formData9, formData10);
     };
 
     const submitVoting = () => {

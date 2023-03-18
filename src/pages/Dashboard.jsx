@@ -78,7 +78,7 @@ function Dashboard() {
 
     const getDataKel = async () => {
         let req = new GetDataKelurahanAPIRequest();
-        req.setKelurahan(kelurahan.current);
+        req.setKecamatan(kelurahan.current);
         let res = await req.fetch();
         if (res.data === null) {
             return;
@@ -86,15 +86,6 @@ function Dashboard() {
             setDataKel(res.data);
         }
     };
-
-    // const getDataKel = async () => {
-    //     const res = await axios.get(process.env.REACT_APP_HOST_VOT + '/gettotaldatakel?kecamatan=' + kelurahan.current);
-    //     if (res.data === null) {
-    //         return;
-    //     } else {
-    //         setDataKel(res.data);
-    //     }
-    // };
 
     const loadDataPie = () => {
         if (voting === null) {
@@ -119,7 +110,6 @@ function Dashboard() {
     return (
         <MainLayout>
             <div style={sx.container}>
-
                 <Paper elevation={3} sx={{ padding: 3 }}>
                     <Grid container sx={sx.headerComponent}>
                         <Grid item sx={sx.gridItemHeader}>
@@ -175,7 +165,7 @@ function Dashboard() {
                         </Grid>
                         <Grid item sx={sx.gridItemHeader}>
                             <FormControl fullWidth>
-                                <InputLabel sx={sx.label} >Pilih Kelurahan</InputLabel>
+                                <InputLabel sx={sx.label} >Pilih Kecamatan</InputLabel>
                                 <Select
                                     onOpen={getKecamatan}
                                     value={filterKel}
